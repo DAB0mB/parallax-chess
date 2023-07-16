@@ -17,7 +17,7 @@ export class Player {
   }
 
   constructor(readonly game: Game, readonly color: Color) {
-    const [row1, row2] = this.color === Color.WHITE ? [0, 1] : [7, 6];
+    const [row1, row2] = this.color === Color.WHITE ? [7, 6] : [0, 1];
 
     this.pieces = new Set([
       new Rook(this, [row1, 0]),

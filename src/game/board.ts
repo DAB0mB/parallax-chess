@@ -39,6 +39,6 @@ export class Board extends Array<Array<Piece | null>> {
   }
 }
 
-export function getCheckerKey(i: number, j: number) {
-  return i * 8 + j;
+export function getCheckerKey(row: number, col: number) {
+  return row * 8 + col;
 }
