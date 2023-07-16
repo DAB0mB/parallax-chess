@@ -37,6 +37,7 @@ export abstract class Piece {
   }
 
   constructor(readonly player: Player, readonly position: Position) {
+    this.board[position[0]][position[1]] = this;
   }
 
   private removeFromGame() {

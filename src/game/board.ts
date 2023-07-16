@@ -22,6 +22,14 @@ export class Board extends Array<Array<Piece | null>> {
 
   constructor(readonly game: Game) {
     super();
+
+    for (let i = 0; i < 8; i++) {
+      const row = this[i] ??= [];
+
+      for (let j = 0; j < 8; j++) {
+        row.push(null);
+      }
+    }
   }
 
   toString() {
@@ -29,4 +37,8 @@ export class Board extends Array<Array<Piece | null>> {
       row.map(piece => piece?.toString() ?? 'XX').join(' '),
     ).join('\n');
   }
+}
+
+export function getCheckerKey(i: number, j: number) {
+  return i * 8 + j;
 }
