@@ -3,6 +3,7 @@ import { useValue } from '../events/hooks';
 import { getCheckerKey } from '../game/board';
 import { Game } from '../game/game';
 import { Piece } from '../game/piece/piece';
+import { Position } from '../game/types';
 import { useCaller } from '../utils/hooks';
 
 export const GameContext = createContext<Game | null>(null);
@@ -62,29 +63,40 @@ export function Selection() {
   const game = useGame();
   const selectedPiece = useValue(game.board.selectedPiece);
 
-  if (!selectedPiece) return null;
+  return useMemo(() => {
+    if (!selectedPiece) return null;
 
-  return (
-    <div>
-      {selectedPiece.availableMoves.map(([row, col]) =>
-        <div key={`${row},${col}`} style={{ position: 'absolute', left: `calc(${col}em - ${selectionBorderSize})`, top: `calc(${row}em - ${selectionBorderSize})`, width: '1em', height: '1em', border: `${selectionBorderSize} solid green` }} />
-      )}
-    </div>
-  )
+    const renderMove = ([row, col]: Position) => {
+      const onClick = () => {
+        selectedPiece.move([row, col]);
+      };
+
+      return (
+        <div key={`${row},${col}`} role='button' style={{ position: 'absolute', left: `calc(${col}em - ${selectionBorderSize})`, top: `calc(${row}em - ${selectionBorderSize})`, width: '1em', height: '1em', cursor: 'pointer', border: `${selectionBorderSize} solid green` }} onClick={onClick} />
+      )
+    };
+
+    return selectedPiece.availableMoves.map(renderMove);
+  }, [selectedPiece]);
 }
 
 const checkerColor1 = '#d18b47';
 const checkerColor2 = '#ffcf9f';
 
 export function Checker(props: { row: number, col: number }) {
+  const game = useGame();
   const rowOdd = props.row % 2;
   const colOdd = props.col % 2;
   const color = rowOdd
     ? colOdd ? checkerColor2 : checkerColor1
     : colOdd ? checkerColor1 : checkerColor2;
 
+  const onClick = useCaller(() => {
+    game.board.unselect();
+  });
+
   return (
-    <div style={{ position: 'absolute', background: color, left: `${props.col}em`, top: `${props.row}em`, width: '1em', height: '1em' }} />
+    <div style={{ position: 'absolute', background: color, left: `${props.col}em`, top: `${props.row}em`, width: '1em', height: '1em' }} onClick={onClick} />
   );
 }
 
@@ -104,13 +116,15 @@ export const PieceIcons = {
 } as const;
 
 export function PieceUI(props: { piece: Piece }) {
-  const game = useGame();
   const icon = PieceIcons[props.piece.toString() as keyof typeof PieceIcons];
-  const [row, col] = props.piece.position;
+  const deleted = useValue(props.piece.deleted);
+  const [row, col] = useValue(props.piece.moved);
 
   const onClick = useCaller(() => {
-    game.board.selectedPiece.value = props.piece;
+    props.piece.select();
   });
+
+  if (deleted) return null;
 
   return (
     <div role='button' style={{ display: 'flex', position: 'absolute', left: `${col}em`, top: `${row}em`, width: '1em', height: '1em', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} onClick={onClick}>

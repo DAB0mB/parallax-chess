@@ -24,4 +24,9 @@ export class State<T> extends Event {
   toString() {
     return this.value?.toString();
   }
+
+  reset(value: T) {
+    this._value = value;
+    this.emit();
+  }
 }

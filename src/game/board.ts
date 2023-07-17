@@ -2,6 +2,7 @@ import { createState } from '../events';
 import { callAll } from '../utils/function';
 import { Game } from './game';
 import { Piece } from './piece/piece';
+import { Position } from './types';
 
 export class Board extends Array<Array<Piece | null>> {
   readonly lastMovedPiece = createState<Piece | null>(null);
@@ -30,6 +31,10 @@ export class Board extends Array<Array<Piece | null>> {
         row.push(null);
       }
     }
+  }
+
+  unselect() {
+    this.selectedPiece.value = null;
   }
 
   toString() {

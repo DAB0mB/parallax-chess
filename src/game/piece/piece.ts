@@ -1,3 +1,4 @@
+import { createState } from '../../events';
 import { cacheProperty, invalidateProperty } from '../../utils/class';
 import { callAll } from '../../utils/function';
 import { Player } from '../player';
@@ -5,23 +6,12 @@ import { Position } from '../types';
 
 export abstract class Piece {
   readonly lastPosition: Position = [-1, -1];
+  readonly moved = createState(this.position);
+  readonly deleted = createState(false);
   abstract get symbol(): string;
 
   private readonly removeListeners = callAll.bind(null, [
-    this.board.lastMovedPiece.listen(() => {
-      invalidateProperty(this, 'availableMoves');
-
-      const lastMovedPiece = this.board.lastMovedPiece.value;
-      if (!lastMovedPiece) return;
-
-      const attacked = (
-        lastMovedPiece.position[0] === this.position[0] &&
-        lastMovedPiece.position[1] === this.position[1]
-      )
-      if (!attacked) return;
-
-      this.removeFromGame();
-    }),
+    () => this.offLastMovedPiece(),
   ]);
 
   get game() {
@@ -33,6 +23,11 @@ export abstract class Piece {
   }
 
   get availableMoves() {
+    this.offLastMovedPiece = this.board.lastMovedPiece.listen(() => {
+      this.offLastMovedPiece();
+      invalidateProperty(this, 'availableMoves');
+    });
+
     return cacheProperty(this, 'availableMoves', this.calculateAvailableMoves());
   }
 
@@ -40,9 +35,15 @@ export abstract class Piece {
     this.board[position[0]][position[1]] = this;
   }
 
-  private removeFromGame() {
+  private offLastMovedPiece() {
+  }
+
+  private delete() {
     this.removeListeners();
+
     this.player.pieces.delete(this);
+    this.board[this.position[0]][this.position[1]] = null;
+    this.deleted.value = true;
   }
 
   protected abstract calculateAvailableMoves(): Position[];
@@ -57,10 +58,16 @@ export abstract class Piece {
       throw new Error('Invalid move');
     }
 
+    const piece = this.board[position[0]][position[1]];
+    piece?.delete();
+
     Object.assign(this.lastPosition, this.position);
     Object.assign(this.position, position);
 
-    this.board.lastMovedPiece.value = this;
+    this.board.lastMovedPiece.reset(this);
+    this.board.unselect();
+
+    this.moved.value = position;
   }
 
   select() {
