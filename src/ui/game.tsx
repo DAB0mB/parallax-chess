@@ -101,18 +101,18 @@ export function Checker(props: { row: number, col: number }) {
 }
 
 export const PieceIcons = {
-  BP: '♙',
-  BR: '♖',
-  BB: '♗',
-  BN: '♘',
-  BQ: '♕',
-  BK: '♔',
-  WP: '♟',
-  WR: '♜',
-  WB: '♝',
-  WN: '♞',
-  WQ: '♛',
-  WK: '♚',
+  BP: <><div>♟</div></>,
+  BR: <><div>♜</div></>,
+  BB: <><div>♝</div></>,
+  BN: <><div>♞</div></>,
+  BQ: <><div>♛</div></>,
+  BK: <><div>♚</div></>,
+  WP: <><div style={{ position: 'absolute', color: 'white' }}>♟</div><div style={{ position: 'absolute' }}>♙</div></>,
+  WR: <><div style={{ position: 'absolute', color: 'white' }}>♜</div><div style={{ position: 'absolute' }}>♖</div></>,
+  WB: <><div style={{ position: 'absolute', color: 'white' }}>♝</div><div style={{ position: 'absolute' }}>♗</div></>,
+  WN: <><div style={{ position: 'absolute', color: 'white' }}>♞</div><div style={{ position: 'absolute' }}>♘</div></>,
+  WQ: <><div style={{ position: 'absolute', color: 'white' }}>♛</div><div style={{ position: 'absolute' }}>♕</div></>,
+  WK: <><div style={{ position: 'absolute', color: 'white' }}>♚</div><div style={{ position: 'absolute' }}>♔</div></>,
 } as const;
 
 export function PieceUI(props: { piece: Piece }) {
@@ -127,8 +127,10 @@ export function PieceUI(props: { piece: Piece }) {
   if (deleted) return null;
 
   return (
-    <div role='button' style={{ display: 'flex', position: 'absolute', left: `${col}em`, top: `${row}em`, width: '1em', height: '1em', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} onClick={onClick}>
-      <div>{icon}</div>
+    <div role='button' style={{ position: 'absolute', left: `${col}em`, top: `${row}em`, width: '1em', height: '1em', cursor: 'pointer', userSelect: 'none' }} onClick={onClick}>
+      <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}>
+        {icon}
+      </div>
     </div>
   );
 }
