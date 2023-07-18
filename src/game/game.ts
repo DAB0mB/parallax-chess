@@ -13,7 +13,7 @@ export class Game {
   readonly winner = createState<Player | null>(null);
 
   private readonly removeListeners = callAll.bind(null, [
-    this.board.lastMovedPiece.listen(() => {
+    this.board.moved.listen(() => {
       const currentPlayer = this.otherPlayer.value;
       const otherPlayer = this.currentPlayer.value;
       this.otherPlayer.value = otherPlayer;
@@ -26,17 +26,17 @@ export class Game {
     const king = this.currentPlayer.value.king;
     if (king.availableMoves.length) return null;
 
-    const lastMovedPiece = this.board.lastMovedPiece.value;
-    if (!lastMovedPiece) return null;
+    const piece = this.board.moved.value;
+    if (!piece) return null;
 
-    const canAttackKing = lastMovedPiece.availableMoves.some((position) => {
+    const canAttackKing = piece.availableMoves.some((position) => {
       return position[0] === king.position[0] && position[1] === king.position[1];
     });
     if (!canAttackKing) return null;
 
     for (const piece of this.currentPlayer.value.pieces) {
       const canCounterAttack = piece.availableMoves.some((position) => {
-        return position[0] === lastMovedPiece.position[0] && position[1] === lastMovedPiece.position[1];
+        return position[0] === piece.position[0] && position[1] === piece.position[1];
       });
       if (canCounterAttack) return null;
     }

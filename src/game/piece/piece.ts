@@ -11,7 +11,7 @@ export abstract class Piece {
   abstract get symbol(): string;
 
   private readonly removeListeners = callAll.bind(null, [
-    () => this.offLastMovedPiece(),
+    () => this.offMoved(),
   ]);
 
   get game() {
@@ -23,8 +23,8 @@ export abstract class Piece {
   }
 
   get availableMoves() {
-    this.offLastMovedPiece = this.board.lastMovedPiece.listen(() => {
-      this.offLastMovedPiece();
+    this.offMoved = this.board.moved.listen(() => {
+      this.offMoved();
       invalidateProperty(this, 'availableMoves');
     });
 
@@ -35,7 +35,7 @@ export abstract class Piece {
     this.board[position[0]][position[1]] = this;
   }
 
-  private offLastMovedPiece() {
+  private offMoved() {
   }
 
   private delete() {
@@ -64,13 +64,13 @@ export abstract class Piece {
     Object.assign(this.lastPosition, this.position);
     Object.assign(this.position, position);
 
-    this.board.lastMovedPiece.reset(this);
-    this.board.unselect();
-
     this.moved.value = position;
+
+    this.board.moved.reset(this);
+    this.board.unselect();
   }
 
   select() {
-    this.board.selectedPiece.value = this;
+    this.board.selected.value = this;
   }
 }

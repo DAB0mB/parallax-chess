@@ -2,15 +2,14 @@ import { createState } from '../events';
 import { callAll } from '../utils/function';
 import { Game } from './game';
 import { Piece } from './piece/piece';
-import { Position } from './types';
 
 export class Board extends Array<Array<Piece | null>> {
-  readonly lastMovedPiece = createState<Piece | null>(null);
-  readonly selectedPiece = createState<Piece | null>(null);
+  readonly moved = createState<Piece | null>(null);
+  readonly selected = createState<Piece | null>(null);
 
   private readonly removeListeners = callAll.bind(null, [
-      this.lastMovedPiece.listen(() => {
-      const piece = this.lastMovedPiece.value;
+    this.moved.listen(() => {
+      const piece = this.moved.value;
       if (!piece) return;
 
       const from = piece.lastPosition;
@@ -34,7 +33,7 @@ export class Board extends Array<Array<Piece | null>> {
   }
 
   unselect() {
-    this.selectedPiece.value = null;
+    this.selected.value = null;
   }
 
   toString() {

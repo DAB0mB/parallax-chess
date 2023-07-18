@@ -61,14 +61,14 @@ const selectionBorderSize = '3px';
 
 export function Selection() {
   const game = useGame();
-  const selectedPiece = useValue(game.board.selectedPiece);
+  const piece = useValue(game.board.selected);
 
   return useMemo(() => {
-    if (!selectedPiece) return null;
+    if (!piece) return null;
 
     const renderMove = ([row, col]: Position) => {
       const onClick = () => {
-        selectedPiece.move([row, col]);
+        piece.move([row, col]);
       };
 
       return (
@@ -76,8 +76,8 @@ export function Selection() {
       )
     };
 
-    return selectedPiece.availableMoves.map(renderMove);
-  }, [selectedPiece]);
+    return piece.availableMoves.map(renderMove);
+  }, [piece]);
 }
 
 const checkerColor1 = '#d18b47';
