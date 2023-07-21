@@ -23,23 +23,12 @@ export class Game {
   ]);
 
   private calcWinner(): Player | null {
-    const king = this.currentPlayer.value.king;
-    if (king.availableMoves.length) return null;
-
     const piece = this.board.moved.value;
     if (!piece) return null;
 
-    const canAttackKing = piece.availableMoves.some((position) => {
-      return position[0] === king.position[0] && position[1] === king.position[1];
-    });
-    if (!canAttackKing) return null;
-
-    for (const piece of this.currentPlayer.value.pieces) {
-      const canCounterAttack = piece.availableMoves.some((position) => {
-        return position[0] === piece.position[0] && position[1] === piece.position[1];
-      });
-      if (canCounterAttack) return null;
-    }
+    const king = this.currentPlayer.value.king;
+    if (piece.position[0] !== king.position[0]) return null;
+    if (piece.position[1] !== king.position[1]) return null;
 
     return this.otherPlayer.value;
   }
