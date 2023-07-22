@@ -29,7 +29,7 @@ export function GameUI() {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ fontSize: '3rem' }}>
+      <div style={{ fontSize: '3rem', perspective: '1000px' }}>
         <GameContext.Provider value={game}>
           <BoardUI />
         </GameContext.Provider>
@@ -43,25 +43,21 @@ export function BoardUI() {
   const game = useGame();
 
   return (
-    <div style={{ position: 'relative', width: '8em', height: '8em' }}>
-      <div>
-        {(
-          game.board.flatMap((row, i) =>
-            row.map((_piece, j) =>
-              <Checker key={getCheckerKey(i, j)} row={i} col={j} />
-            )
+    <div style={{ position: 'relative', width: '8em', height: '8em', transform: 'rotateX(30deg)', transformStyle: 'preserve-3d' }}>
+      {(
+        game.board.flatMap((row, i) =>
+          row.map((_piece, j) =>
+            <Checker key={getCheckerKey(i, j)} row={i} col={j} />
           )
-        )}
-      </div>
-      <div>
-        {(
-          game.board.flatMap((row, i) =>
-            row.map((piece, j) =>
-              piece ? <PieceUI key={getCheckerKey(i, j)} piece={piece} /> : null
-            )
+        )
+      )}
+      {(
+        game.board.flatMap((row, i) =>
+          row.map((piece, j) =>
+            piece ? <PieceUI key={getCheckerKey(i, j)} piece={piece} /> : null
           )
-        )}
-      </div>
+        )
+      )}
       <Selection />
     </div>
   )
@@ -106,7 +102,7 @@ export function Checker(props: { row: number, col: number }) {
   });
 
   return (
-    <div style={{ position: 'absolute', background: color, left: `${props.col}em`, top: `${props.row}em`, width: '1em', height: '1em' }} onClick={onClick} />
+    <div role='button' style={{ position: 'absolute', background: color, left: `${props.col}em`, top: `${props.row}em`, width: '1em', height: '1em' }} onClick={onClick} />
   );
 }
 
@@ -117,12 +113,12 @@ export const PieceIcons = {
   BN: <><div>♞</div></>,
   BQ: <><div>♛</div></>,
   BK: <><div>♚</div></>,
-  WP: <><div style={{ position: 'absolute', color: 'white' }}>♟</div><div style={{ position: 'absolute' }}>♙</div></>,
-  WR: <><div style={{ position: 'absolute', color: 'white' }}>♜</div><div style={{ position: 'absolute' }}>♖</div></>,
-  WB: <><div style={{ position: 'absolute', color: 'white' }}>♝</div><div style={{ position: 'absolute' }}>♗</div></>,
-  WN: <><div style={{ position: 'absolute', color: 'white' }}>♞</div><div style={{ position: 'absolute' }}>♘</div></>,
-  WQ: <><div style={{ position: 'absolute', color: 'white' }}>♛</div><div style={{ position: 'absolute' }}>♕</div></>,
-  WK: <><div style={{ position: 'absolute', color: 'white' }}>♚</div><div style={{ position: 'absolute' }}>♔</div></>,
+  WP: <><div style={{ position: 'absolute', color: 'white' }}>♟</div><div style={{ position: 'absolute', color: 'black' }}>♙</div></>,
+  WR: <><div style={{ position: 'absolute', color: 'white' }}>♜</div><div style={{ position: 'absolute', color: 'black' }}>♖</div></>,
+  WB: <><div style={{ position: 'absolute', color: 'white' }}>♝</div><div style={{ position: 'absolute', color: 'black' }}>♗</div></>,
+  WN: <><div style={{ position: 'absolute', color: 'white' }}>♞</div><div style={{ position: 'absolute', color: 'black' }}>♘</div></>,
+  WQ: <><div style={{ position: 'absolute', color: 'white' }}>♛</div><div style={{ position: 'absolute', color: 'black' }}>♕</div></>,
+  WK: <><div style={{ position: 'absolute', color: 'white' }}>♚</div><div style={{ position: 'absolute', color: 'black' }}>♔</div></>,
 } as const;
 
 export function PieceUI(props: { piece: Piece }) {
@@ -135,12 +131,15 @@ export function PieceUI(props: { piece: Piece }) {
     if (game.currentPlayer.value === props.piece.player) {
       props.piece.select();
     }
+    else {
+      game.board.unselect();
+    }
   });
 
   if (deleted) return null;
 
   return (
-    <div role='button' style={{ position: 'absolute', left: `${col}em`, top: `${row}em`, width: '1em', height: '1em', cursor: 'pointer', userSelect: 'none' }} onClick={onClick}>
+    <div role='button' style={{ transform: 'rotateX(-30deg)', transformOrigin: 'bottom', position: 'absolute', left: `${col}em`, top: `${row}em`, width: '1em', height: '1em', cursor: 'pointer', userSelect: 'none' }} onClick={onClick}>
       <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}>
         {icon}
       </div>
