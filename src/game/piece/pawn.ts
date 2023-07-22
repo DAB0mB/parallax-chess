@@ -1,4 +1,4 @@
-import { Color, Position } from '../types';
+import { Color, Position } from '@/game/types';
 import { Piece } from './piece';
 
 export class Pawn extends Piece {

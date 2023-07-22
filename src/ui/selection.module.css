@@ -1,0 +1,9 @@
+@value borderSize: 3px;
+
+.selection {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+  border: borderSize solid green;
+}

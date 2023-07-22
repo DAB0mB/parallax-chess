@@ -1,0 +1,13 @@
+.checker {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+}
+
+.checkerDark {
+  background: #d18b47;
+}
+
+.checkerLight {
+  background: #ffcf9f;
+}

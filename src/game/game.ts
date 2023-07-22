@@ -1,5 +1,5 @@
-import { createState } from '../events';
-import { callAll } from '../utils/function';
+import { createState } from '@/events';
+import { callAll } from '@/utils/function';
 import { Board } from './board';
 import { Player } from './player';
 import { Color } from './types';

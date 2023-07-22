@@ -1,8 +1,8 @@
-import { createState } from '../../events';
-import { cacheProperty, invalidateProperty } from '../../utils/class';
-import { callAll } from '../../utils/function';
-import { Player } from '../player';
-import { Position } from '../types';
+import { createState } from '@/events';
+import { Player } from '@/game/player';
+import { Position } from '@/game/types';
+import { cacheProperty, invalidateProperty } from '@/utils/class';
+import { callAll } from '@/utils/function';
 
 export abstract class Piece {
   readonly lastPosition: Position = [-1, -1];

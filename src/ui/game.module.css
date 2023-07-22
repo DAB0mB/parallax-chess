@@ -1,0 +1,10 @@
+.game {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gameBoard {
+  font-size: 3rem;
+  perspective: 1000px;
+}

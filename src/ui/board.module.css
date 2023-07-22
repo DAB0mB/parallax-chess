@@ -1,0 +1,7 @@
+.board {
+  position: relative;
+  width: 8em;
+  height: 8em;
+  transform: rotateX(30deg);
+  transform-style: preserve-3d;
+}

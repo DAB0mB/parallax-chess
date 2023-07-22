@@ -1,5 +1,4 @@
 import { useCallback, useInsertionEffect, useRef } from 'react';
-import { autorun } from 'react-autorun';
 
 export function useCaller<Fn extends (...args: any) => any>(fn: Fn) {
   const ref = useRef(callerRefInit as Fn);
@@ -12,7 +11,7 @@ export function useCaller<Fn extends (...args: any) => any>(fn: Fn) {
     return ref.current(...args);
   }, []) as Fn;
 
-  return autorun.ignore(caller);
+  return caller;
 }
 
 function callerRefInit() {

@@ -1,4 +1,4 @@
-import { Position } from '../types';
+import { Position } from '@/game/types';
 import { Piece } from './piece';
 
 export class Bishop extends Piece {

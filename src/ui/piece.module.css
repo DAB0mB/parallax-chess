@@ -1,0 +1,33 @@
+.piece {
+  transform: rotateX(-30deg);
+  transform-origin: bottom;
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+  user-select: none;
+}
+
+.icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.whitePiece {
+  position: absolute;
+  color: white;
+}
+
+.pieceStroke {
+  position: absolute;
+  color: black;
+}
+
+.blackPiece {
+  position: absolute;
+  color: black;
+}
