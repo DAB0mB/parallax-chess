@@ -116,12 +116,15 @@ export const PieceIcons = {
 } as const;
 
 export function PieceUI(props: { piece: Piece }) {
+  const game = useGame();
   const icon = PieceIcons[props.piece.toString() as keyof typeof PieceIcons];
   const deleted = useValue(props.piece.deleted);
   const [row, col] = useValue(props.piece.moved);
 
   const onClick = useCaller(() => {
-    props.piece.select();
+    if (game.currentPlayer.value === props.piece.player) {
+      props.piece.select();
+    }
   });
 
   if (deleted) return null;
