@@ -16,7 +16,7 @@ export class Player {
     return this.game.board;
   }
 
-  constructor(readonly game: Game, readonly color: Color) {
+  constructor(readonly game: Game, readonly name: string, readonly color: Color) {
     const [row1, row2] = this.color === Color.WHITE ? [7, 6] : [0, 1];
 
     this.pieces = new Set([

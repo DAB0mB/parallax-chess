@@ -1,10 +1,11 @@
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { useValue } from '../events/hooks';
 import { getCheckerKey } from '../game/board';
 import { Game } from '../game/game';
 import { Piece } from '../game/piece/piece';
 import { Position } from '../game/types';
 import { useCaller } from '../utils/hooks';
+import { WinnerMessage } from './winner_message';
 
 export const GameContext = createContext<Game | null>(null);
 
@@ -17,14 +18,23 @@ export const useGame = () => {
   return game;
 };
 
+const createGame = () => new Game();
+
 export function GameUI() {
-  const game = useMemo(() => new Game(), []);
+  const [game, setGame] = useState(createGame);
+
+  const restartGame = useCaller(() => {
+    setGame(createGame);
+  });
 
   return (
-    <div style={{ fontSize: '3rem' }}>
-      <GameContext.Provider value={game}>
-        <BoardUI />
-      </GameContext.Provider>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ fontSize: '3rem' }}>
+        <GameContext.Provider value={game}>
+          <BoardUI />
+        </GameContext.Provider>
+      </div>
+      <WinnerMessage game={game} restartGame={restartGame} />
     </div>
   );
 }
