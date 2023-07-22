@@ -1,6 +1,7 @@
 import { useValue } from '@/events/hooks';
 import { Piece as GamePiece } from '@/game/piece/piece';
 import { useCaller } from '@/utils/hooks';
+import { withVars } from '@/utils/style';
 import { useGame } from './game_context';
 import css from './piece.module.css';
 
@@ -38,7 +39,7 @@ export function Piece(props: PieceProps) {
   if (deleted) return null;
 
   return (
-    <div className={css.piece} role='button' style={{ left: `${col}em`, top: `${row}em` }} onClick={onClick}>
+    <div className={css.piece} role='button' style={withVars({ col: `${col}em`, row: `${row}em` })} onClick={onClick}>
       <div className={css.icon}>
         {icon}
       </div>
