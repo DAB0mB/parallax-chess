@@ -18,7 +18,7 @@ export function Selection() {
       };
 
       return (
-        <div key={`${row},${col}`} className={css.selection} role='button' style={withVars({ row: `${row}em`, col: `${col}em` })} onClick={onClick} />
+        <div key={`${row},${col}`} className={css.selection} role='button' style={withVars({ row: `${row}em`, col: `${col}em` })} onClickCapture={onClick} />
       )
     };
 

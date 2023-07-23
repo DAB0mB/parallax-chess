@@ -12,7 +12,14 @@ export function Checker(props: { row: number, col: number }) {
     : colOdd ? css.checkerDark : css.checkerLight;
 
   const onClick = useCaller(() => {
-    game.board.unselect();
+    const piece = game.board[props.row][props.col];
+
+    if (piece && piece.player === game.currentPlayer.value) {
+      piece.select();
+    }
+    else {
+      game.board.unselect();
+    }
   });
 
   return (

@@ -1,8 +1,6 @@
 import { useValue } from '@/events/hooks';
 import { Piece as GamePiece } from '@/game/piece/piece';
-import { useCaller } from '@/utils/hooks';
 import { withVars } from '@/utils/style';
-import { useGame } from './game_context';
 import css from './piece.module.css';
 
 export type PieceProps = {
@@ -25,21 +23,14 @@ export const PieceIcons = {
 } as const;
 
 export function Piece(props: PieceProps) {
-  const game = useGame();
   const icon = PieceIcons[props.piece.toString() as keyof typeof PieceIcons];
   const deleted = useValue(props.piece.deleted);
   const [row, col] = useValue(props.piece.moved);
 
-  const onClick = useCaller(() => {
-    if (game.currentPlayer.value === props.piece.player) {
-      props.piece.select();
-    }
-  });
-
   if (deleted) return null;
 
   return (
-    <div className={css.piece} role='button' style={withVars({ col: `${col}em`, row: `${row}em` })} onClick={onClick}>
+    <div className={css.piece} role='button' style={withVars({ col: `${col}em`, row: `${row}em` })}>
       <div className={css.icon}>
         {icon}
       </div>

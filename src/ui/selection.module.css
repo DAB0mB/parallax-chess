@@ -4,7 +4,6 @@
   position: absolute;
   width: 1em;
   height: 1em;
-  cursor: pointer;
   box-shadow: inset 0px 0px .2em 0px var(--selection);
   border-style: inset;
   border: borderSize solid var(--selection);
