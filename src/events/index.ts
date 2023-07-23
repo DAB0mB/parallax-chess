@@ -5,19 +5,20 @@ import { Memo } from './memo';
 import { State } from './state';
 
 export const emitter = new Emitter();
+export const noopEvent = createEvent();
 
-export const createEvent = () => {
+export function createEvent() {
   return new Event(emitter);
-};
+}
 
-export const createEffect = (events: Event[]) => {
+export function createEffect(events: Event[]) {
   return new Effect(emitter, events);
-};
+}
 
-export const createState = <T>(value: T) => {
+export function createState<T>(value: T) {
   return new State<T>(emitter, value);
-};
+}
 
-export const createMemo = <T>(events: Event[], getter: () => T) => {
+export function createMemo<T>(events: Event[], getter: () => T) {
   return new Memo<T>(emitter, events, getter);
-};
+}

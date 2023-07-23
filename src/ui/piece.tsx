@@ -1,4 +1,6 @@
-import { useValue } from '@/events/hooks';
+import { noopEvent } from '@/events';
+import { useEvent, useValue } from '@/events/hooks';
+import { Pawn } from '@/game/piece/pawn';
 import { Piece as GamePiece } from '@/game/piece/piece';
 import { withVars } from '@/utils/style';
 import css from './piece.module.css';
@@ -26,6 +28,8 @@ export function Piece(props: PieceProps) {
   const icon = PieceIcons[props.piece.toString() as keyof typeof PieceIcons];
   const deleted = useValue(props.piece.deleted);
   const [row, col] = useValue(props.piece.moved);
+
+  useEvent(props.piece instanceof Pawn ? props.piece.upgraded : noopEvent)
 
   if (deleted) return null;
 

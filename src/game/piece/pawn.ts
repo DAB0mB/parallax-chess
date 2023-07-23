@@ -1,10 +1,14 @@
+import { createEvent } from '@/events';
 import { Color, Position } from '@/game/types';
 import { Piece } from './piece';
+import { Queen } from './queen';
 
 export class Pawn extends Piece {
   get symbol() {
     return 'P';
   }
+
+  readonly upgraded = createEvent();
 
   protected calculateAvailableMoves() {
     const availableMoves: Position[] = [];
@@ -39,5 +43,14 @@ export class Pawn extends Piece {
     }
 
     return availableMoves;
+  }
+
+  override move(position: Position): void {
+    super.move(position);
+
+    if (this.position[0] === 0 || this.position[0] === 7) {
+      Object.setPrototypeOf(this, Queen.prototype);
+      this.upgraded.emit();
+    }
   }
 }

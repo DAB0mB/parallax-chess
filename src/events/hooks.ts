@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Event } from './event';
-import { State } from './state';
 import { Memo } from './memo';
+import { State } from './state';
 
 let renderCount = 0;
 

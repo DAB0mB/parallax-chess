@@ -31,5 +31,6 @@
 
 .blackPiece {
   position: absolute;
+  transform: rotateY(180deg);
   color: var(--blackPiece);
 }
