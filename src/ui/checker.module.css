@@ -5,9 +5,9 @@
 }
 
 .checkerDark {
-  background: #d18b47;
+  background: var(--darkChecker);
 }
 
 .checkerLight {
-  background: #ffcf9f;
+  background: var(--lightChecker);
 }

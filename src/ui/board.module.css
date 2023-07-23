@@ -1,5 +1,5 @@
 .board {
-  background: #d18b47;
+  background: var(--darkChecker);
   transform: rotateX(30deg);
 }
 
@@ -21,6 +21,6 @@
   position: relative;
   width: 8em;
   height: 8em;
-  border: .1em solid #ffcf9f;
+  border: .1em solid var(--lightChecker);
   transform-style: preserve-3d;
 }

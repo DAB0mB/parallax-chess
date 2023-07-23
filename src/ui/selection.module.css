@@ -3,7 +3,7 @@
   width: 1em;
   height: 1em;
   cursor: pointer;
-  border: var(--borderSize) solid green;
+  border: var(--borderSize) solid var(--selection);
   left: calc(var(--col) - var(--borderSize));
   top: calc(var(--row) - var(--borderSize));
 }

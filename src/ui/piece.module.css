@@ -21,15 +21,15 @@
 
 .whitePiece {
   position: absolute;
-  color: white;
+  color: var(--whitePiece);
 }
 
 .pieceStroke {
   position: absolute;
-  color: black;
+  color: var(--blackPiece);
 }
 
 .blackPiece {
   position: absolute;
-  color: black;
+  color: var(--blackPiece);
 }
