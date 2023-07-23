@@ -3,16 +3,13 @@ import { useGame } from './game_context';
 import css from './checker.module.css';
 import classNames from 'classnames';
 
-const dark = css.checkerDark
-const light = css.checkerLight;
-
 export function Checker(props: { row: number, col: number }) {
   const game = useGame();
   const rowOdd = props.row % 2;
   const colOdd = props.col % 2;
   const color = rowOdd
-    ? colOdd ? light : dark
-    : colOdd ? dark : light;
+    ? colOdd ? css.checkerLight : css.checkerDark
+    : colOdd ? css.checkerDark : css.checkerLight;
 
   const onClick = useCaller(() => {
     game.board.unselect();

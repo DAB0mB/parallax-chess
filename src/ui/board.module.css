@@ -1,7 +1,26 @@
 .board {
+  background: #d18b47;
+  transform: rotateX(30deg);
+}
+
+.vAxes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+.hAxes {
+  display: flex;
+  flex-direction: row;
+  transform-style: preserve-3d;
+
+}
+
+.checkers {
   position: relative;
   width: 8em;
   height: 8em;
-  transform: rotateX(30deg);
+  border: .1em solid #ffcf9f;
   transform-style: preserve-3d;
 }

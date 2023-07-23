@@ -1,0 +1,35 @@
+@value magnifier: 3;
+@value fontSize: calc(1 / magnifier * 1em);
+@value unitSize: calc(magnifier * 1em);
+
+.vAxis {
+  display: flex;
+  flex-direction: column;
+}
+
+.hAxis {
+  display: flex;
+  flex-direction: row;
+}
+
+.unit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: fontSize;
+}
+
+.vUnit {
+  width: 1em;
+  height: unitSize;
+}
+
+.hUnit {
+  height: 1em;
+  width: unitSize;
+}
+
+.flip {
+  transform: rotateX(180deg);
+}
