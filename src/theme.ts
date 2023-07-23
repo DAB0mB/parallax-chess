@@ -6,7 +6,7 @@ export const theme = {
   lightChecker: '#ffcf9f',
   darkChecker: '#d18b47',
   axis: '#fff',
-  selection: '#008000',
+  selection: '#00ff00',
 } satisfies Record<string, string | number>;
 
 export const ThemeContext = createContext(theme);

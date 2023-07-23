@@ -5,8 +5,6 @@ import { useGame } from './game_context';
 import css from './selection.module.css';
 import { withVars } from '@/utils/style';
 
-export const borderSize = '3px';
-
 export function Selection() {
   const game = useGame();
   const piece = useValue(game.board.selected);
@@ -20,7 +18,7 @@ export function Selection() {
       };
 
       return (
-        <div key={`${row},${col}`} className={css.selection} role='button' style={withVars({ row: `${row}em`, col: `${col}em`, borderSize })} onClick={onClick} />
+        <div key={`${row},${col}`} className={css.selection} role='button' style={withVars({ row: `${row}em`, col: `${col}em` })} onClick={onClick} />
       )
     };
 
