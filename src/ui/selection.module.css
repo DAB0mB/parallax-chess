@@ -4,7 +4,7 @@
   position: absolute;
   width: 1em;
   height: 1em;
-  box-shadow: inset 0px 0px .2em 0px var(--selection);
+  box-shadow: inset 0px 0px .5em 0px var(--selection);
   border-style: inset;
   border: borderSize solid var(--selection);
   left: calc(var(--col) - borderSize);
