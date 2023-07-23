@@ -1,12 +1,17 @@
-@value borderSize: 1px;
+@value borderRadius: 1px;
 
-.selection {
+.availableMove {
   position: absolute;
   width: 1em;
   height: 1em;
-  box-shadow: inset 0px 0px .5em 0px var(--selection);
+  box-shadow: inset 0px 0px .5em 0px var(--availableMove);
   border-style: inset;
-  border: borderSize solid var(--selection);
-  left: calc(var(--col) - borderSize);
-  top: calc(var(--row) - borderSize);
+  border: borderRadius solid var(--availableMove);
+  left: calc(var(--col) - borderRadius);
+  top: calc(var(--row) - borderRadius);
+}
+
+.selectedPiece {
+  box-shadow: inset 0px 0px .5em 0px var(--selectedPiece);
+  border: borderRadius solid var(--selectedPiece);
 }
