@@ -1,0 +1,21 @@
+.player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1em;
+  height: 1em;
+}
+
+.stroke {
+  position: absolute;
+  font-size: 1.1em;
+  color: transparent;
+  text-shadow: 0 0 black;
+  transform: scaleX(1.1);
+}
+
+.icon {
+  position: absolute;
+  color: transparent;
+  text-shadow: 0 0 var(--color);
+}
