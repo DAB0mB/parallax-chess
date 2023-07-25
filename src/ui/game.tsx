@@ -20,18 +20,18 @@ export function Game() {
 
   return (
     <div className={css.game} style={themeCssVars}>
-      <div className={css.blackPlayer}>
-        <Player color='black' />
-      </div>
-      <div className={css.gameBoard}>
-        <GameContext.Provider value={game}>
-          <Board />
-        </GameContext.Provider>
-      </div>
-      <div className={css.whitePlayer}>
-        <Player color='white' />
-      </div>
-      <WinnerMessage game={game} restartGame={restartGame} />
+      <GameContext.Provider value={game}>
+        <div className={css.blackPlayer}>
+          <Player player={game.player2} />
+        </div>
+        <div className={css.gameBoard}>
+            <Board />
+        </div>
+        <div className={css.whitePlayer}>
+          <Player player={game.player1} />
+        </div>
+        <WinnerMessage restartGame={restartGame} />
+      </GameContext.Provider>
     </div>
   );
 }

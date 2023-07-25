@@ -4,6 +4,7 @@
   align-items: center;
   width: 1em;
   height: 1em;
+  position: relative;
 }
 
 .stroke {
@@ -18,4 +19,22 @@
   position: absolute;
   color: transparent;
   text-shadow: 0 0 var(--color);
+}
+
+.handStroke {
+  position: absolute;
+  font-size: .6em;
+  right: calc(100% - .1em);
+  bottom: -.1em;
+  text-shadow: 0 0 black;
+  color: transparent;
+}
+
+.hand {
+  position: absolute;
+  font-size: .5em;
+  right: 100%;
+  bottom: 0;
+  text-shadow: 0 0 var(--color);
+  color: transparent;
 }

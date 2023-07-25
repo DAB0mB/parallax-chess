@@ -1,15 +1,15 @@
 import { useLocale } from '@/locale';
 import { useValue } from '../events/hooks';
-import { Game } from '../game/game';
+import { useGame } from './game_context';
 import css from './winner_message.module.css';
 
 export type WinnerMessageProps = {
-  game: Game,
   restartGame: () => void,
 };
 
 export function WinnerMessage(props: WinnerMessageProps) {
-  const winner = useValue(props.game.winner);
+  const game = useGame();
+  const winner = useValue(game.winner);
   const l = useLocale();
 
   if (!winner) return null;

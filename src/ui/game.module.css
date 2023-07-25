@@ -13,6 +13,7 @@
 .blackPlayer {
   font-size: 2.8em;
   margin-bottom: -.5em;
+  transform: rotateY(180deg);
 }
 
 .whitePlayer {
