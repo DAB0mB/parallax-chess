@@ -6,8 +6,8 @@ import { Color } from './types';
 
 export class Game {
   readonly board = new Board(this);
-  readonly player1 = new Player(this, 'WHITE player', Color.WHITE);
-  readonly player2 = new Player(this, 'BLACK player', Color.BLACK);
+  readonly player1 = new Player(this, 'WHITE', Color.WHITE);
+  readonly player2 = new Player(this, 'BLACK', Color.BLACK);
   readonly currentPlayer = createState(this.player1);
   readonly otherPlayer = createState(this.player2);
   readonly winner = createState<Player | null>(null);

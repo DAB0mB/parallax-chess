@@ -3,6 +3,7 @@ import { Player as GamePlayer } from '@/game/player';
 import { Color } from '@/game/types';
 import { withVars } from '@/utils/style';
 import { useGame } from './game_context';
+import { PieceSymbols } from './piece';
 import css from './player.module.css';
 
 export type PlayerProps = {
@@ -11,15 +12,19 @@ export type PlayerProps = {
 
 export function Player(props: PlayerProps) {
   const game = useGame();
+  const selectedPiece = useValue(game.board.selected);
   const currentPlayer = useValue(game.currentPlayer);
   const winner = useValue(game.winner);
   const color = props.player.color === Color.WHITE ? 'white' : 'black';
+  const bubbleText = selectedPiece ? PieceSymbols[selectedPiece.toString() as keyof typeof PieceSymbols] : '···';
 
   return (
     <div className={css.player} style={withVars({ color })}>
       {!winner && currentPlayer === props.player && (
         <div className={css.bubble}>
-          <Bubble />
+          <Bubble>
+            {bubbleText}
+          </Bubble>
         </div>
       )}
       <div className={css.stroke}>👤</div>
@@ -28,7 +33,11 @@ export function Player(props: PlayerProps) {
   );
 }
 
-function Bubble() {
+type BubbleProps = {
+  children: string;
+};
+
+function Bubble(props: BubbleProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -66,9 +75,14 @@ function Bubble() {
         }}
         d="M9,114.3c-3-0.3-5.7,1.9-6,4.9  s1.9,5.6,4.9,5.9s5.7-1.9,6-4.9C14.2,117.3,12,114.6,9,114.3z"
       />
-      <circle cx="52.5" cy="55" r="4.5" fill="#000000" />
-      <circle cx="67.5" cy="55" r="4.5" fill="#000000" />
-      <circle cx="82.5" cy="55" r="4.5" fill="#000000" />
+      <text
+        style={{
+          fontWeight: 900,
+        }}
+        x="66" y="58" fill="#000000" textAnchor="middle" alignmentBaseline="middle"
+      >
+        {props.children}
+      </text>
     </svg>
   );
 }

@@ -5,9 +5,20 @@ import { Piece as GamePiece } from '@/game/piece/piece';
 import { withVars } from '@/utils/style';
 import css from './piece.module.css';
 
-export type PieceProps = {
-  piece: GamePiece,
-};
+export const PieceSymbols = {
+  BP: '♟',
+  BR: '♜',
+  BB: '♝',
+  BN: '♞',
+  BQ: '♛',
+  BK: '♚',
+  WP: '♙',
+  WR: '♖',
+  WB: '♗',
+  WN: '♘',
+  WQ: '♕',
+  WK: '♔',
+} as const;
 
 export const PieceIcons = {
   BP: <><div className={css.blackPiece}>♟</div></>,
@@ -23,6 +34,10 @@ export const PieceIcons = {
   WQ: <><div className={css.whitePiece}>♛</div><div className={css.pieceStroke}>♕</div></>,
   WK: <><div className={css.whitePiece}>♚</div><div className={css.pieceStroke}>♔</div></>,
 } as const;
+
+export type PieceProps = {
+  piece: GamePiece,
+};
 
 export function Piece(props: PieceProps) {
   const icon = PieceIcons[props.piece.toString() as keyof typeof PieceIcons];
