@@ -20,3 +20,9 @@ export function useValue<TValue>(event: State<TValue> | Memo<TValue>) {
 
   return event.value;
 }
+
+export function useListener(event: Event, caller: () => void) {
+  useEffect(() => {
+    return event.listen(caller);
+  }, [caller]);
+}

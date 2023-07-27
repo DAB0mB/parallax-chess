@@ -12,8 +12,9 @@
   position: absolute;
   font-size: 1.1em;
   color: transparent;
-  text-shadow: 0 0 black;
+  text-shadow: 0 0 var(--stroke);
   transform: scaleX(1.1);
+  filter: invert(1);
 }
 
 .icon {
