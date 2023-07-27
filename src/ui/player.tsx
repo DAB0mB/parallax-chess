@@ -13,10 +13,10 @@ export function Player(props: PlayerProps) {
   const game = useGame();
   const currentPlayer = useValue(game.currentPlayer);
   const color = props.player.color === Color.WHITE ? 'var(--whitePiece)' : 'var(--blackPiece)';
-  const stroke = currentPlayer === props.player ? color : 'transparent';
+  const visibility = currentPlayer === props.player ? 'inherit' : 'hidden';
 
   return (
-    <div className={css.player} style={withVars({ color, stroke })}>
+    <div className={css.player} style={withVars({ color, visibility })}>
       <div className={css.stroke}>👤</div>
       <div className={css.icon}>👤</div>
     </div>

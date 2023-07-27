@@ -6,13 +6,14 @@
   height: 1em;
   position: relative;
   user-select: none;
+  visibility: var(--visibility);
 }
 
 .stroke {
   position: absolute;
   font-size: 1.1em;
   color: transparent;
-  text-shadow: 0 0 var(--stroke);
+  text-shadow: 0 0 var(--color);
   transform: scaleX(1.1);
   filter: invert(1);
 }
