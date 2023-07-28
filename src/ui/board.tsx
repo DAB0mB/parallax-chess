@@ -1,5 +1,6 @@
 import { getCheckerKey } from '@/game/board';
 import classNames from 'classnames';
+import { useMemo } from 'react';
 import { HorizontalAxis, VerticalAxis } from './axis';
 import css from './board.module.css';
 import { Checker } from './checker';
@@ -10,7 +11,7 @@ import { Selection } from './selection';
 export function Board() {
   const game = useGame();
 
-  return (
+  return useMemo(() =>
     <div className={classNames(css.board, css.vAxes)}>
       <HorizontalAxis flip />
       <div className={css.hAxes}>
@@ -36,5 +37,5 @@ export function Board() {
       </div>
       <HorizontalAxis />
     </div>
-  )
+  , [game]);
 }
