@@ -18,7 +18,7 @@ export const dark: Theme = {
   background: '#333',
   lightChecker: '#e8eaed',
   darkChecker: '#768191',
-  availableMove: '#00ffaa',
+  availableMove: '#00ffff',
 };
 
 export const ThemeContext = createContext<Theme | null>(null);
