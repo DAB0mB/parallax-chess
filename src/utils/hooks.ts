@@ -1,7 +1,7 @@
 import { useCallback, useInsertionEffect, useRef } from 'react';
 
 export function useCaller<Fn extends (...args: any) => any>(fn: Fn) {
-  const ref = useRef(callerRefInit as Fn);
+  const ref = useRef(fn);
 
   useInsertionEffect(() => {
     ref.current = fn;
@@ -12,8 +12,4 @@ export function useCaller<Fn extends (...args: any) => any>(fn: Fn) {
   }, []) as Fn;
 
   return caller;
-}
-
-function callerRefInit() {
-  throw new Error('Function not ready');
 }

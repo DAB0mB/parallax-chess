@@ -31,9 +31,9 @@ export function Game() {
     setGame(createGame);
   });
 
-  useListener(game.currentPlayer, useCaller(() => {
+  useListener(game.currentPlayer, () => {
     setTheme(getTheme(game));
-  }));
+  });
 
   return (
     <div className={css.game} style={themeCssVars}>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useInsertionEffect, useRef, useState } from 'react';
 import { Event } from './event';
 import { Memo } from './memo';
 import { State } from './state';
@@ -21,8 +21,14 @@ export function useValue<TValue>(event: State<TValue> | Memo<TValue>) {
   return event.value;
 }
 
-export function useListener(event: Event, caller: () => void) {
+export function useListener(event: Event, fn: () => void) {
+  const ref = useRef(fn);
+
+  useInsertionEffect(() => {
+    ref.current = fn;
+  }, [fn]);
+
   useEffect(() => {
-    return event.listen(caller);
-  }, [caller]);
+    return event.listen((...args) => ref.current(...args));
+  }, []);
 }
