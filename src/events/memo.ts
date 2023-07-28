@@ -15,7 +15,7 @@ export class Memo<TValue> extends Effect {
     return this._value;
   }
 
-  constructor(emitter: Emitter, events: Event[], private readonly getter: () => TValue) {
+  constructor(emitter: Emitter, private readonly getter: () => TValue, events: Event[]) {
     super(emitter, events);
   }
 

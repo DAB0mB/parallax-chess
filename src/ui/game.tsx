@@ -8,28 +8,11 @@ import { Board } from './board';
 import css from './game.module.css';
 import { GameContext } from './game_context';
 import { Player } from './player';
-import { WinnerMessage } from './winner_message';
-
-const createGame = () => new GameEngine();
-
-const getTheme = (game: GameEngine) => {
-  const currentPlayer = game.currentPlayer.value;
-
-  if (currentPlayer) {
-    return currentPlayer.color === Color.WHITE ? light : dark;
-  }
-
-  return light;
-};
 
 export function Game() {
-  const [game, setGame] = useState(createGame);
+  const [game] = useState(() => new GameEngine());
   const [theme, setTheme] = useState(() => getTheme(game));
   const themeCssVars = useThemeCssVars(theme);
-
-  const restartGame = useCaller(() => {
-    setGame(createGame);
-  });
 
   useListener(game.currentPlayer, () => {
     setTheme(getTheme(game));
@@ -49,10 +32,19 @@ export function Game() {
             <div className={css.whitePlayer}>
               <Player player={game.player1} />
             </div>
-            <WinnerMessage restartGame={restartGame} />
           </GameContext.Provider>
         </ThemeContext.Provider>
       </div>
     </div>
   );
 }
+
+const getTheme = (game: GameEngine) => {
+  const currentPlayer = game.currentPlayer.value;
+
+  if (currentPlayer) {
+    return currentPlayer.color === Color.WHITE ? light : dark;
+  }
+
+  return light;
+};

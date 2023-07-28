@@ -2,11 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1em;
+  width: 8em;
   height: 1em;
   position: relative;
   user-select: none;
-  visibility: var(--visibility);
 }
 
 .stroke {

@@ -19,6 +19,6 @@ export function createState<T>(value: T) {
   return new State<T>(emitter, value);
 }
 
-export function createMemo<T>(events: Event[], getter: () => T) {
-  return new Memo<T>(emitter, events, getter);
+export function createMemo<T>(getter: () => T, events: Event[]) {
+  return new Memo<T>(emitter, getter, events);
 }

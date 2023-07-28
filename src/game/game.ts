@@ -1,4 +1,4 @@
-import { createState } from '@/events';
+import { createMemo, createState } from '@/events';
 import { callAll } from '@/utils/function';
 import { Board } from './board';
 import { Player } from './player';
@@ -14,11 +14,13 @@ export class Game {
 
   private readonly removeListeners = callAll.bind(null, [
     this.board.moved.listen(() => {
+      const winner = this.winner.value = this.calcWinner();
+      if (winner) return;
+
       const currentPlayer = this.otherPlayer.value;
       const otherPlayer = this.currentPlayer.value;
       this.otherPlayer.value = otherPlayer;
       this.currentPlayer.value = currentPlayer;
-      this.winner.value = this.calcWinner();
     }),
   ]);
 
@@ -26,10 +28,10 @@ export class Game {
     const piece = this.board.moved.value;
     if (!piece) return null;
 
-    const king = this.currentPlayer.value.king;
+    const king = this.otherPlayer.value.king;
     if (piece.position[0] !== king.position[0]) return null;
     if (piece.position[1] !== king.position[1]) return null;
 
-    return this.otherPlayer.value;
+    return this.currentPlayer.value;
   }
 }

@@ -1,25 +1,22 @@
+import { Color } from '@/game/types';
 import { useLocale } from '@/locale';
-import { useValue } from '../events/hooks';
-import { useGame } from './game_context';
+import { withVars } from '@/utils/style';
 import css from './winner_message.module.css';
 
 export type WinnerMessageProps = {
-  restartGame: () => void,
+  winnerColor: Color,
 };
 
 export function WinnerMessage(props: WinnerMessageProps) {
-  const game = useGame();
-  const winner = useValue(game.winner);
   const l = useLocale();
 
-  if (!winner) return null;
+  const [message, color] = props.winnerColor === Color.WHITE ?
+    [l['you win'], 'var(--blackPiece)'] :
+    [l['you loose'], 'var(--whitePiece)'];
 
   return (
-    <div className={css.winnerMessage}>
-      <div className={css.overlay}>
-        <h1>{l['winner'](winner.name)}</h1>
-        <h4 className={css.playAgainButton} role='button' onClick={props.restartGame}>{l['play again']}</h4>
-      </div>
+    <div className={css.winnerMessage} style={withVars({ color })}>
+      {message}
     </div>
   );
 }
