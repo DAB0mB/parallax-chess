@@ -10,7 +10,7 @@ export abstract class Piece {
   readonly deleted = createState(false);
   abstract get symbol(): string;
 
-  private readonly removeListeners = callAll.bind(null, [
+  private readonly offEvents = callAll.bind(null, [
     () => this.offMoved(),
   ]);
 
@@ -35,22 +35,21 @@ export abstract class Piece {
     this.board[position[0]][position[1]] = this;
   }
 
+  toString() {
+    return `${this.player.color}${this.symbol}`;
+  }
+
   private offMoved() {
   }
 
-  private delete() {
-    this.removeListeners();
+  delete() {
+    this.offEvents();
 
     this.player.pieces.delete(this);
-    this.board[this.position[0]][this.position[1]] = null;
     this.deleted.value = true;
   }
 
   protected abstract calculateAvailableMoves(): Position[];
-
-  toString() {
-    return `${this.player.color}${this.symbol}`;
-  }
 
   move(position: Position) {
     const isValidMove = this.availableMoves.some(move => move[0] === position[0] && move[1] === position[1]);
@@ -58,19 +57,10 @@ export abstract class Piece {
       throw new Error('Invalid move');
     }
 
-    const piece = this.board[position[0]][position[1]];
-    piece?.delete();
-
     Object.assign(this.lastPosition, this.position);
     Object.assign(this.position, position);
 
     this.moved.value = position;
-
     this.board.moved.reset(this);
-    this.board.unselect();
-  }
-
-  select() {
-    this.board.selected.value = this;
   }
 }

@@ -2,7 +2,6 @@ import { useListener } from '@/events/hooks';
 import { Game as GameEngine } from '@/game/game';
 import { Color } from '@/game/types';
 import { ThemeContext, dark, light, useThemeCssVars } from '@/theme';
-import { useCaller } from '@/utils/hooks';
 import { useState } from 'react';
 import { Board } from './board';
 import css from './game.module.css';

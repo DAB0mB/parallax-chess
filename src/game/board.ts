@@ -7,7 +7,7 @@ export class Board extends Array<Array<Piece | null>> {
   readonly moved = createState<Piece | null>(null);
   readonly selected = createState<Piece | null>(null);
 
-  private readonly removeListeners = callAll.bind(null, [
+  private readonly offEvents = callAll.bind(null, [
     this.moved.listen(() => {
       const piece = this.moved.value;
       if (!piece) return;
@@ -15,8 +15,13 @@ export class Board extends Array<Array<Piece | null>> {
       const from = piece.lastPosition;
       const to = piece.position;
 
+      const oldPiece = this[to[0]][to[1]];
+      oldPiece?.delete();
+
       this[from[0]][from[1]] = null;
       this[to[0]][to[1]] = piece;
+
+      this.unselect();
     }),
   ]);
 
@@ -32,14 +37,18 @@ export class Board extends Array<Array<Piece | null>> {
     }
   }
 
-  unselect() {
-    this.selected.value = null;
-  }
-
   toString() {
     return this.map(row =>
       row.map(piece => piece?.toString() ?? 'XX').join(' '),
     ).join('\n');
+  }
+
+  select(piece: Piece) {
+    this.selected.value = piece;
+  }
+
+  unselect() {
+    this.selected.value = null;
   }
 }
 

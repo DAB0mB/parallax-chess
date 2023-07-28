@@ -19,7 +19,7 @@ export function Checker(props: { row: number, col: number }) {
     const piece = game.board[props.row][props.col];
 
     if (piece && piece.player === game.currentPlayer.value) {
-      piece.select();
+      game.board.select(piece);
     }
     else {
       game.board.unselect();
