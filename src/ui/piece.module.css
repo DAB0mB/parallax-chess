@@ -1,5 +1,5 @@
 .piece {
-  transform: rotateX(-30deg);
+  transform: rotateX(calc(var(--boardAngle) * -1));
   transform-origin: bottom;
   position: absolute;
   width: 1em;

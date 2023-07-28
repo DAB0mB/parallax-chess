@@ -1,6 +1,7 @@
 .board {
+  --boardAngle: 30deg;
   background: var(--darkChecker);
-  transform: rotateX(30deg);
+  transform: rotateX(var(--boardAngle));
 }
 
 .vAxes {
