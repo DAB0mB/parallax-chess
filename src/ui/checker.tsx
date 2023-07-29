@@ -18,7 +18,7 @@ export function Checker(props: { row: number, col: number }) {
 
     const piece = game.board[props.row][props.col];
 
-    if (piece && piece.player === game.currentPlayer.value) {
+    if (piece && piece.color === game.currentPlayer.value.color) {
       game.board.select(piece);
     }
     else {

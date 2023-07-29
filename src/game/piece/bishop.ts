@@ -18,7 +18,7 @@ export class Bishop extends Piece {
       while (row >= 0 && row < 8 && col >= 0 && col < 8) {
         if (!this.board[row][col]) {
           availableMoves.push([row, col]);
-        } else if (this.board[row][col]?.player !== this.player) {
+        } else if (this.board[row][col]?.color !== this.color) {
           availableMoves.push([row, col]);
           break;
         } else {

@@ -1,5 +1,4 @@
 import { createState } from '@/events';
-import { Game } from './game';
 import { Piece } from './piece/piece';
 
 export class Board extends Array<Array<Piece | null>> {
@@ -22,7 +21,7 @@ export class Board extends Array<Array<Piece | null>> {
     this.unselect();
   });
 
-  constructor(readonly game: Game) {
+  constructor(readonly pieces: Piece[]) {
     super();
 
     for (let i = 0; i < 8; i++) {
@@ -31,6 +30,11 @@ export class Board extends Array<Array<Piece | null>> {
       for (let j = 0; j < 8; j++) {
         row.push(null);
       }
+    }
+
+    for (const piece of pieces) {
+      this[piece.position[0]][piece.position[1]] = piece;
+      piece.board = this;
     }
   }
 
@@ -47,8 +51,4 @@ export class Board extends Array<Array<Piece | null>> {
   unselect() {
     this.selected.value = null;
   }
-}
-
-export function getCheckerKey(row: number, col: number) {
-  return row * 8 + col;
 }

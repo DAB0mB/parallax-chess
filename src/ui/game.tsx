@@ -23,13 +23,13 @@ export function Game() {
         <ThemeContext.Provider value={theme}>
           <GameContext.Provider value={game}>
             <div className={css.blackPlayer}>
-              <Player player={game.player2} />
+              <Player player={game.blackPlayer} />
             </div>
             <div className={css.gameBoard}>
-                <Board />
+              <Board />
             </div>
             <div className={css.whitePlayer}>
-              <Player player={game.player1} />
+              <Player player={game.whitePlayer} />
             </div>
           </GameContext.Provider>
         </ThemeContext.Provider>

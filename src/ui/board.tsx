@@ -1,4 +1,3 @@
-import { getCheckerKey } from '@/game/board';
 import classNames from 'classnames';
 import { useMemo } from 'react';
 import { HorizontalAxis, VerticalAxis } from './axis';
@@ -9,7 +8,7 @@ import { Piece } from './piece';
 import { Selection } from './selection';
 
 export function Board() {
-  const game = useGame();
+  const { board } = useGame();
 
   return useMemo(() =>
     <div className={classNames(css.board, css.vAxes)}>
@@ -17,25 +16,23 @@ export function Board() {
       <div className={css.hAxes}>
         <VerticalAxis />
         <div className={css.checkers}>
-          {(
-            game.board.flatMap((row, i) =>
+          {
+            Array.from(board).flatMap((row, i) =>
               row.map((_piece, j) =>
-                <Checker key={getCheckerKey(i, j)} row={i} col={j} />
+                <Checker key={`${i},${j}`} row={i} col={j} />
               )
             )
-          )}
-          {(
-            game.board.flatMap((row, i) =>
-              row.map((piece, j) =>
-                piece ? <Piece key={getCheckerKey(i, j)} piece={piece} /> : null
-              )
+          }
+          {
+            board.pieces.map((piece) =>
+              <Piece key={piece.position.toString()} piece={piece} />
             )
-          )}
+          }
           <Selection />
         </div>
         <VerticalAxis flip />
       </div>
       <HorizontalAxis />
     </div>
-  , [game]);
+  , [board]);
 }

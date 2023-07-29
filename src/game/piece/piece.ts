@@ -1,20 +1,25 @@
 import { createState } from '@/events';
-import { Player } from '@/game/player';
-import { Position } from '@/game/types';
+import { Color, Position } from '@/game/types';
 import { cacheProperty, invalidateProperty } from '@/utils/class';
+import { Board } from '../board';
 
 export abstract class Piece {
+  private _board?: Board;
   readonly lastPosition: Position = [-1, -1];
   readonly moved = createState(this.position);
   readonly deleted = createState(false);
   abstract get symbol(): string;
 
-  get game() {
-    return this.player.game;
+  get board() {
+    if (!this._board) {
+      throw new Error(`Piece.board not set`);
+    }
+
+    return this._board;
   }
 
-  get board() {
-    return this.player.board;
+  set board(board: Board) {
+    this._board = board;
   }
 
   get availableMoves() {
@@ -26,12 +31,11 @@ export abstract class Piece {
     return cacheProperty(this, 'availableMoves', this.calculateAvailableMoves());
   }
 
-  constructor(readonly player: Player, readonly position: Position) {
-    this.board[position[0]][position[1]] = this;
+  constructor(readonly color: Color, readonly position: Position) {
   }
 
   toString() {
-    return `${this.player.color}${this.symbol}`;
+    return `${this.color}${this.symbol}`;
   }
 
   private offMoved() {
@@ -39,7 +43,6 @@ export abstract class Piece {
 
   delete() {
     this.offMoved();
-    this.player.pieces.delete(this);
     this.deleted.value = true;
   }
 

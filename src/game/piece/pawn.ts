@@ -14,7 +14,7 @@ export class Pawn extends Piece {
     const availableMoves: Position[] = [];
 
     // Determine the direction of movement based on the player's color
-    const direction = this.player.color === Color.WHITE ? -1 : 1;
+    const direction = this.color === Color.WHITE ? -1 : 1;
 
     // Check if the pawn can move one step forward
     const oneStepForwardRow = this.position[0] + direction;
@@ -24,7 +24,7 @@ export class Pawn extends Piece {
     }
 
     // Check if the pawn can move two steps forward from the starting position
-    const startingRow = this.player.color === Color.WHITE ? 6 : 1;
+    const startingRow = this.color === Color.WHITE ? 6 : 1;
     if (this.position[0] === startingRow && !this.board[oneStepForwardRow][oneStepForwardCol]) {
       const twoStepsForwardRow = this.position[0] + 2 * direction;
       const twoStepsForwardCol = this.position[1];
@@ -37,7 +37,7 @@ export class Pawn extends Piece {
     const captureMoves = [[oneStepForwardRow, this.position[1] - 1], [oneStepForwardRow, this.position[1] + 1]];
     for (const move of captureMoves) {
       const [row, col] = move;
-      if (row >= 0 && row < 8 && col >= 0 && col < 8 && this.board[row][col] && this.board[row][col]?.player !== this.player) {
+      if (row >= 0 && row < 8 && col >= 0 && col < 8 && this.board[row][col] && this.board[row][col]?.color !== this.color) {
         availableMoves.push([row, col]);
       }
     }
