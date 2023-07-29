@@ -19,7 +19,7 @@ export function Game() {
 
   return (
     <div className={css.game} style={themeCssVars}>
-      <div className={css.radialBg}>
+      <div className={css.gameBody}>
         <ThemeContext.Provider value={theme}>
           <GameContext.Provider value={game}>
             <div className={css.blackPlayer}>
