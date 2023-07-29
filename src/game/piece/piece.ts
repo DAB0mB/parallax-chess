@@ -2,17 +2,12 @@ import { createState } from '@/events';
 import { Player } from '@/game/player';
 import { Position } from '@/game/types';
 import { cacheProperty, invalidateProperty } from '@/utils/class';
-import { callAll } from '@/utils/function';
 
 export abstract class Piece {
   readonly lastPosition: Position = [-1, -1];
   readonly moved = createState(this.position);
   readonly deleted = createState(false);
   abstract get symbol(): string;
-
-  private readonly offEvents = callAll.bind(null, [
-    () => this.offMoved(),
-  ]);
 
   get game() {
     return this.player.game;
@@ -43,8 +38,7 @@ export abstract class Piece {
   }
 
   delete() {
-    this.offEvents();
-
+    this.offMoved();
     this.player.pieces.delete(this);
     this.deleted.value = true;
   }

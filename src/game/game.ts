@@ -1,5 +1,4 @@
 import { createState } from '@/events';
-import { callAll } from '@/utils/function';
 import { Board } from './board';
 import { Player } from './player';
 import { Color } from './types';
@@ -12,17 +11,15 @@ export class Game {
   readonly otherPlayer = createState(this.player2);
   readonly winner = createState<Player | null>(null);
 
-  private readonly offEvents = callAll.bind(null, [
-    this.board.moved.listen(() => {
-      const winner = this.winner.value = this.calcWinner();
-      if (winner) return;
+  private readonly offMoved = this.board.moved.listen(() => {
+    const winner = this.winner.value = this.calcWinner();
+    if (winner) return;
 
-      const currentPlayer = this.otherPlayer.value;
-      const otherPlayer = this.currentPlayer.value;
-      this.otherPlayer.value = otherPlayer;
-      this.currentPlayer.value = currentPlayer;
-    }),
-  ]);
+    const currentPlayer = this.otherPlayer.value;
+    const otherPlayer = this.currentPlayer.value;
+    this.otherPlayer.value = otherPlayer;
+    this.currentPlayer.value = currentPlayer;
+  });
 
   private calcWinner(): Player | null {
     const piece = this.board.moved.value;

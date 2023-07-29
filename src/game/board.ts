@@ -1,5 +1,4 @@
 import { createState } from '@/events';
-import { callAll } from '@/utils/function';
 import { Game } from './game';
 import { Piece } from './piece/piece';
 
@@ -7,23 +6,21 @@ export class Board extends Array<Array<Piece | null>> {
   readonly moved = createState<Piece | null>(null);
   readonly selected = createState<Piece | null>(null);
 
-  private readonly offEvents = callAll.bind(null, [
-    this.moved.listen(() => {
-      const piece = this.moved.value;
-      if (!piece) return;
+  private readonly offMoved = this.moved.listen(() => {
+    const piece = this.moved.value;
+    if (!piece) return;
 
-      const from = piece.lastPosition;
-      const to = piece.position;
+    const from = piece.lastPosition;
+    const to = piece.position;
 
-      const oldPiece = this[to[0]][to[1]];
-      oldPiece?.delete();
+    const oldPiece = this[to[0]][to[1]];
+    oldPiece?.delete();
 
-      this[from[0]][from[1]] = null;
-      this[to[0]][to[1]] = piece;
+    this[from[0]][from[1]] = null;
+    this[to[0]][to[1]] = piece;
 
-      this.unselect();
-    }),
-  ]);
+    this.unselect();
+  });
 
   constructor(readonly game: Game) {
     super();
