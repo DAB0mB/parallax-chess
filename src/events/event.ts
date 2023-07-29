@@ -8,7 +8,7 @@ export class Event {
     this.emitter.emit(this);
   }
 
-  listen(listener: Listener) {
-    return this.emitter.listen(this, listener);
+  on(listener: Listener) {
+    return this.emitter.on(this, listener);
   }
 }

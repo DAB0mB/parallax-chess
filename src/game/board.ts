@@ -5,7 +5,7 @@ export class Board extends Array<Array<Piece | null>> {
   readonly moved = createState<Piece | null>(null);
   readonly selected = createState<Piece | null>(null);
 
-  private readonly offMoved = this.moved.listen(() => {
+  private readonly offMoved = this.moved.on(() => {
     const piece = this.moved.value;
     if (!piece) return;
 

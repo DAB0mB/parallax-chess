@@ -9,7 +9,7 @@ export function useEvent(event: Event) {
   const [, setState] = useState(renderCount);
 
   useEffect(() => {
-    return event.listen(() => {
+    return event.on(() => {
       setState(++renderCount);
     });
   }, [event]);
@@ -29,6 +29,6 @@ export function useListener(event: Event, fn: () => void) {
   }, [fn]);
 
   useEffect(() => {
-    return event.listen((...args) => ref.current(...args));
+    return event.on((...args) => ref.current(...args));
   }, []);
 }

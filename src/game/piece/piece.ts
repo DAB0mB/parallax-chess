@@ -23,7 +23,7 @@ export abstract class Piece {
   }
 
   get availableMoves() {
-    this.offMoved = this.board.moved.listen(() => {
+    this.offMoved = this.board.moved.on(() => {
       this.offMoved();
       invalidateProperty(this, 'availableMoves');
     });

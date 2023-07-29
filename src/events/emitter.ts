@@ -12,7 +12,7 @@ export class Emitter {
     }
   }
 
-  listen(key: unknown, listener: Listener) {
+  on(key: unknown, listener: Listener) {
     if (!this.listeners.has(key)) {
       this.listeners.set(key, new Set());
     }

@@ -53,7 +53,7 @@ export class Game {
   readonly otherPlayer = createState(this.blackPlayer);
   readonly winner = createState<Player | null>(null);
 
-  private readonly offMoved = this.board.moved.listen(() => {
+  private readonly offMoved = this.board.moved.on(() => {
     const winner = this.winner.value = this.calcWinner();
     if (winner) return;
 

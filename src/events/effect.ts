@@ -14,15 +14,15 @@ export class Effect extends Event {
     super(emitter);
   }
 
-  override listen(listener: Listener) {
+  override on(listener: Listener) {
     this.listenersCount++;
-    const unlisteners = [super.listen(listener)];
+    const unlisteners = [super.on(listener)];
 
     if (this.listenersCount === 1) {
       const emit = () => this.emit();
 
       for (const event of this.events) {
-        const unlisten = event.listen(emit);
+        const unlisten = event.on(emit);
         unlisteners.push(unlisten);
       }
     }
