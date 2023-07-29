@@ -2,7 +2,7 @@ import { Event } from './event';
 import { Emitter, Listener } from './emitter';
 
 export class Effect extends Event {
-  private listenersCount = 0;
+  private readonly offCache = new Set<() => void>();
 
   constructor(emitter: Emitter, private readonly events: Event[]) {
     for (const event of events) {
@@ -15,23 +15,27 @@ export class Effect extends Event {
   }
 
   override on(listener: Listener) {
-    this.listenersCount++;
-    const offEffect = [super.on(listener)];
+    const offEffect = super.on(listener);
+    this.offCache.add(offEffect)
 
-    if (this.listenersCount === 1) {
+    if (this.offCache.size === 1) {
       const emit = () => this.emit();
 
       for (const event of this.events) {
         const offEvent = event.on(emit);
-        offEffect.push(offEvent);
+        this.offCache.add(offEvent);
       }
     }
 
     return () => {
-      this.listenersCount--;
+      offEffect();
+      this.offCache.delete(offEffect);
 
-      for (const offEvent of offEffect) {
+      if (this.offCache.size >= this.events.length) return;
+
+      for (const offEvent of this.offCache) {
         offEvent();
+        this.offCache.delete(offEvent);
       }
     };
   }
