@@ -6,7 +6,7 @@ export class Knight extends Piece {
     return 'N';
   }
 
-  protected calculateAvailableMoves() {
+  protected calcAvailableMoves() {
     const availableMoves: Position[] = [];
     const directions = [
       [-2, -1],

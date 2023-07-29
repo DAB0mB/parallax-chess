@@ -28,7 +28,7 @@ export abstract class Piece {
       invalidateProperty(this, 'availableMoves');
     });
 
-    return cacheProperty(this, 'availableMoves', this.calculateAvailableMoves());
+    return cacheProperty(this, 'availableMoves', this.calcAvailableMoves());
   }
 
   constructor(readonly color: Color, readonly position: Position) {
@@ -46,7 +46,7 @@ export abstract class Piece {
     this.deleted.value = true;
   }
 
-  protected abstract calculateAvailableMoves(): Position[];
+  protected abstract calcAvailableMoves(): Position[];
 
   move(position: Position) {
     const isValidMove = this.availableMoves.some(move => move[0] === position[0] && move[1] === position[1]);

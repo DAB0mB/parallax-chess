@@ -6,7 +6,7 @@ export class Bishop extends Piece {
     return 'B';
   }
 
-  protected calculateAvailableMoves() {
+  protected calcAvailableMoves() {
     const availableMoves: Position[] = [];
     const directions = [[-1, -1], [-1, 1], [1, -1], [1, 1]]; // Top Left, Top Right, Bottom Left, Bottom Right
 

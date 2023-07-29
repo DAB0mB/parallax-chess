@@ -6,7 +6,7 @@ export class King extends Piece {
     return 'K';
   }
 
-  protected calculateAvailableMoves() {
+  protected calcAvailableMoves() {
     const availableMoves: Position[] = [];
     const directions = [
       [-1, 0], [1, 0], [0, -1], [0, 1], // Up, Down, Left, Right

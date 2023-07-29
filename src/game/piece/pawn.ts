@@ -10,7 +10,7 @@ export class Pawn extends Piece {
 
   readonly upgraded = createEvent();
 
-  protected calculateAvailableMoves() {
+  protected calcAvailableMoves() {
     const availableMoves: Position[] = [];
 
     // Determine the direction of movement based on the player's color
