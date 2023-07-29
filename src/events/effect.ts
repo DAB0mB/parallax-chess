@@ -16,22 +16,22 @@ export class Effect extends Event {
 
   override on(listener: Listener) {
     this.listenersCount++;
-    const unlisteners = [super.on(listener)];
+    const offEffect = [super.on(listener)];
 
     if (this.listenersCount === 1) {
       const emit = () => this.emit();
 
       for (const event of this.events) {
-        const unlisten = event.on(emit);
-        unlisteners.push(unlisten);
+        const offEvent = event.on(emit);
+        offEffect.push(offEvent);
       }
     }
 
     return () => {
       this.listenersCount--;
 
-      for (const unlisten of unlisteners) {
-        unlisten();
+      for (const offEvent of offEffect) {
+        offEvent();
       }
     };
   }

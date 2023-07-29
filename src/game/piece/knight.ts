@@ -25,7 +25,7 @@ export class Knight extends Piece {
       const col = this.position[1] + deltaCol;
 
       if (row >= 0 && row < 8 && col >= 0 && col < 8) {
-        if (!this.board[row][col] || this.board[row][col]?.player !== this.player) {
+        if (!this.board[row][col] || this.board[row][col]?.color !== this.color) {
           availableMoves.push([row, col]);
         }
       }

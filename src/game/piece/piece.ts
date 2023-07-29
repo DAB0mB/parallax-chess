@@ -4,21 +4,16 @@ import { cacheProperty, invalidateProperty } from '@/utils/class';
 import { Board } from '../board';
 
 export abstract class Piece {
-  private _board?: Board;
   readonly moved = createState(this.position);
   readonly deleted = createState(false);
   abstract get symbol(): string;
 
-  get board() {
-    if (!this._board) {
-      throw new Error('Piece.board not set');
-    }
-
-    return this._board;
+  get board(): Board {
+    throw new Error('Board not set');
   }
 
   set board(board: Board) {
-    this._board = board;
+    cacheProperty(this, 'board', board);
   }
 
   get availableMoves() {

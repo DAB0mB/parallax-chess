@@ -11,7 +11,6 @@ import { Color } from './types';
 
 export class Game {
   readonly pieces = [
-    // white
     new Rook(Color.BLACK, [0, 0]),
     new Knight(Color.BLACK, [0, 1]),
     new Bishop(Color.BLACK, [0, 2]),
@@ -28,7 +27,6 @@ export class Game {
     new Pawn(Color.BLACK, [1, 5]),
     new Pawn(Color.BLACK, [1, 6]),
     new Pawn(Color.BLACK, [1, 7]),
-    // black
     new Rook(Color.WHITE, [7, 0]),
     new Knight(Color.WHITE, [7, 1]),
     new Bishop(Color.WHITE, [7, 2]),
