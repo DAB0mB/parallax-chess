@@ -5,14 +5,13 @@ import { Board } from '../board';
 
 export abstract class Piece {
   private _board?: Board;
-  readonly lastPosition: Position = [-1, -1];
   readonly moved = createState(this.position);
   readonly deleted = createState(false);
   abstract get symbol(): string;
 
   get board() {
     if (!this._board) {
-      throw new Error(`Piece.board not set`);
+      throw new Error('Piece.board not set');
     }
 
     return this._board;
@@ -31,7 +30,7 @@ export abstract class Piece {
     return cacheProperty(this, 'availableMoves', this.calcAvailableMoves());
   }
 
-  constructor(readonly color: Color, readonly position: Position) {
+  constructor(readonly color: Color, public position: Position) {
   }
 
   toString() {
@@ -54,10 +53,6 @@ export abstract class Piece {
       throw new Error('Invalid move');
     }
 
-    Object.assign(this.lastPosition, this.position);
-    Object.assign(this.position, position);
-
-    this.moved.value = position;
-    this.board.moved.reset(this);
+    this.moved.value = this.position = position;
   }
 }

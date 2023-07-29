@@ -1,25 +1,29 @@
 import { createState } from '@/events';
 import { Piece } from './piece/piece';
+import { callAll } from '@/utils/function';
 
 export class Board extends Array<Array<Piece | null>> {
   readonly moved = createState<Piece | null>(null);
   readonly selected = createState<Piece | null>(null);
 
-  private readonly offMoved = this.moved.on(() => {
-    const piece = this.moved.value;
-    if (!piece) return;
+  private offPieceMoved = callAll.bind(null, this.pieces.map((piece) => {
+    let lastPosition = piece.position;
 
-    const from = piece.lastPosition;
-    const to = piece.position;
+    return piece.moved.on(() => {
+      const from = lastPosition;
+      const to = piece.position;
+      lastPosition = piece.position;
 
-    const oldPiece = this[to[0]][to[1]];
-    oldPiece?.delete();
+      const oldPiece = this[to[0]][to[1]];
+      oldPiece?.delete();
 
-    this[from[0]][from[1]] = null;
-    this[to[0]][to[1]] = piece;
+      this[from[0]][from[1]] = null;
+      this[to[0]][to[1]] = piece;
 
-    this.unselect();
-  });
+      this.unselect();
+      this.moved.reset(piece);
+    });
+  }));
 
   constructor(readonly pieces: Piece[]) {
     super();
