@@ -18,7 +18,7 @@ export class Effect extends Event {
     const offEffect = super.on(listener);
     this.offCache.add(offEffect)
 
-    if (this.offCache.size === 1) {
+    if (this.offCache.size == 1) {
       const emit = () => this.emit();
 
       for (const event of this.events) {
@@ -31,11 +31,11 @@ export class Effect extends Event {
       offEffect();
       this.offCache.delete(offEffect);
 
-      if (this.offCache.size >= this.events.length) return;
-
-      for (const offEvent of this.offCache) {
-        offEvent();
-        this.offCache.delete(offEvent);
+      if (this.offCache.size == this.events.length) {
+        for (const offEvent of this.offCache) {
+          offEvent();
+          this.offCache.delete(offEvent);
+        }
       }
     };
   }
