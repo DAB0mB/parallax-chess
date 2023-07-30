@@ -1,6 +1,6 @@
-@value gap: .5em;
-
 .footer {
+  @value gap: .5em;
+
   position: absolute;
   bottom: 0;
   width: calc(100% - gap * 2);
@@ -12,12 +12,10 @@
   align-items: center;
 }
 
-.footer > a {
-  display: flex;
-}
-
 .icon {
+  display: flex;
   width: 3em;
   padding: .5em;
-  fill: var(--icon);
+  opacity: .6;
+  fill: var(--text);
 }

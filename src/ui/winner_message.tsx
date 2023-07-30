@@ -1,6 +1,5 @@
 import { Color } from '@/game/types';
 import { useLocale } from '@/locale';
-import { withVars } from '@/utils/style';
 import css from './winner_message.module.css';
 
 export type WinnerMessageProps = {
@@ -9,13 +8,10 @@ export type WinnerMessageProps = {
 
 export function WinnerMessage(props: WinnerMessageProps) {
   const l = useLocale();
-
-  const [message, color] = props.winnerColor === Color.WHITE ?
-    [l['you win'], 'var(--blackPiece)'] :
-    [l['you loose'], 'var(--whitePiece)'];
+  const message = props.winnerColor === Color.WHITE ? l['you win'] : l['you loose'];
 
   return (
-    <div className={css.winnerMessage} style={withVars({ color })}>
+    <div className={css.winnerMessage}>
       {message}
     </div>
   );

@@ -1,3 +1,15 @@
+import blackBishopSvg from '@/assets/chess_pieces/black_bishop.svg';
+import blackKingSvg from '@/assets/chess_pieces/black_king.svg';
+import blackKnightSvg from '@/assets/chess_pieces/black_knight.svg';
+import blackPawnSvg from '@/assets/chess_pieces/black_pawn.svg';
+import blackQueenSvg from '@/assets/chess_pieces/black_queen.svg';
+import blackRookSvg from '@/assets/chess_pieces/black_rook.svg';
+import whiteBishopSvg from '@/assets/chess_pieces/white_bishop.svg';
+import whiteKingSvg from '@/assets/chess_pieces/white_king.svg';
+import whiteKnightSvg from '@/assets/chess_pieces/white_knight.svg';
+import whitePawnSvg from '@/assets/chess_pieces/white_pawn.svg';
+import whiteQueenSvg from '@/assets/chess_pieces/white_queen.svg';
+import whiteRookSvg from '@/assets/chess_pieces/white_rook.svg';
 import { noopEvent } from '@/events';
 import { useEvent, useValue } from '@/events/hooks';
 import { Pawn } from '@/game/piece/pawn';
@@ -5,34 +17,19 @@ import { Piece as GamePiece } from '@/game/piece/piece';
 import { withVars } from '@/utils/style';
 import css from './piece.module.css';
 
-export const PieceSymbols = {
-  BP: '♟',
-  BR: '♜',
-  BB: '♝',
-  BN: '♞',
-  BQ: '♛',
-  BK: '♚',
-  WP: '♙',
-  WR: '♖',
-  WB: '♗',
-  WN: '♘',
-  WQ: '♕',
-  WK: '♔',
-} as const;
-
 export const PieceIcons = {
-  BP: <><div className={css.blackPiece}>♟</div></>,
-  BR: <><div className={css.blackPiece}>♜</div></>,
-  BB: <><div className={css.blackPiece}>♝</div></>,
-  BN: <><div className={css.blackPiece}>♞</div></>,
-  BQ: <><div className={css.blackPiece}>♛</div></>,
-  BK: <><div className={css.blackPiece}>♚</div></>,
-  WP: <><div className={css.whitePiece}>♟</div><div className={css.pieceStroke}>♙</div></>,
-  WR: <><div className={css.whitePiece}>♜</div><div className={css.pieceStroke}>♖</div></>,
-  WB: <><div className={css.whitePiece}>♝</div><div className={css.pieceStroke}>♗</div></>,
-  WN: <><div className={css.whitePiece}>♞</div><div className={css.pieceStroke}>♘</div></>,
-  WQ: <><div className={css.whitePiece}>♛</div><div className={css.pieceStroke}>♕</div></>,
-  WK: <><div className={css.whitePiece}>♚</div><div className={css.pieceStroke}>♔</div></>,
+  BP: <img src={blackPawnSvg} alt='black pawn' />,
+  BR: <img src={blackRookSvg} alt='black rook' />,
+  BB: <img src={blackBishopSvg} alt='black bishop' />,
+  BN: <img src={blackKnightSvg} alt='black knight' />,
+  BQ: <img src={blackQueenSvg} alt='black queen' />,
+  BK: <img src={blackKingSvg} alt='black king' />,
+  WP: <img src={whitePawnSvg} alt='white pawn' />,
+  WR: <img src={whiteRookSvg} alt='white rook' />,
+  WB: <img src={whiteBishopSvg} alt='white bishop' />,
+  WN: <img src={whiteKnightSvg} alt='white knight' />,
+  WQ: <img src={whiteQueenSvg} alt='white queen' />,
+  WK: <img src={whiteKingSvg} alt='white king' />,
 } as const;
 
 export type PieceProps = {

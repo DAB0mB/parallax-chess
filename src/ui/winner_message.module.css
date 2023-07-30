@@ -3,6 +3,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color);
+  color: var(--text);
   user-select: none;
 }
