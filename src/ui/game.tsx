@@ -4,6 +4,7 @@ import { Color } from '@/game/types';
 import { ThemeContext, dark, light, useThemeCssVars } from '@/theme';
 import { useState } from 'react';
 import { Board } from './board';
+import { Footer } from './footer';
 import css from './game.module.css';
 import { GameContext } from './game_context';
 import { Player } from './player';
@@ -31,6 +32,7 @@ export function Game() {
             <div className={css.whitePlayer}>
               <Player player={game.whitePlayer} />
             </div>
+            <Footer />
           </GameContext.Provider>
         </ThemeContext.Provider>
       </div>
@@ -38,7 +40,7 @@ export function Game() {
   );
 }
 
-const getTheme = (game: GameEngine) => {
+function getTheme(game: GameEngine) {
   const currentPlayer = game.currentPlayer.value;
 
   if (currentPlayer) {
@@ -46,4 +48,4 @@ const getTheme = (game: GameEngine) => {
   }
 
   return light;
-};
+}
