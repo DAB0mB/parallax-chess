@@ -1,11 +1,12 @@
+@value gap: .5em;
+
 .footer {
-  --gap: .5em;
   position: absolute;
   bottom: 0;
-  width: calc(100% - var(--gap) * 2);
-  padding: var(--gap) 0;
-  margin-top: var(--gap);
-  gap: var(--gap);
+  width: calc(100% - gap * 2);
+  padding: gap 0;
+  margin-top: gap;
+  gap: gap;
   display: flex;
   flex-direction: row;
   align-items: center;
