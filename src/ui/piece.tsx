@@ -18,18 +18,18 @@ import { withVars } from '@/utils/style';
 import css from './piece.module.css';
 
 export const PieceIcons = {
-  BP: <img src={blackPawnSvg} alt='black pawn' />,
-  BR: <img src={blackRookSvg} alt='black rook' />,
-  BB: <img src={blackBishopSvg} alt='black bishop' />,
-  BN: <img src={blackKnightSvg} alt='black knight' />,
-  BQ: <img src={blackQueenSvg} alt='black queen' />,
-  BK: <img src={blackKingSvg} alt='black king' />,
-  WP: <img src={whitePawnSvg} alt='white pawn' />,
-  WR: <img src={whiteRookSvg} alt='white rook' />,
-  WB: <img src={whiteBishopSvg} alt='white bishop' />,
-  WN: <img src={whiteKnightSvg} alt='white knight' />,
-  WQ: <img src={whiteQueenSvg} alt='white queen' />,
-  WK: <img src={whiteKingSvg} alt='white king' />,
+  BP: <img className={css.icon} src={blackPawnSvg} alt='black pawn' />,
+  BR: <img className={css.icon} src={blackRookSvg} alt='black rook' />,
+  BB: <img className={css.icon} src={blackBishopSvg} alt='black bishop' />,
+  BN: <img className={css.icon} src={blackKnightSvg} alt='black knight' />,
+  BQ: <img className={css.icon} src={blackQueenSvg} alt='black queen' />,
+  BK: <img className={css.icon} src={blackKingSvg} alt='black king' />,
+  WP: <img className={css.icon} src={whitePawnSvg} alt='white pawn' />,
+  WR: <img className={css.icon} src={whiteRookSvg} alt='white rook' />,
+  WB: <img className={css.icon} src={whiteBishopSvg} alt='white bishop' />,
+  WN: <img className={css.icon} src={whiteKnightSvg} alt='white knight' />,
+  WQ: <img className={css.icon} src={whiteQueenSvg} alt='white queen' />,
+  WK: <img className={css.icon} src={whiteKingSvg} alt='white king' />,
 } as const;
 
 export type PieceProps = {
@@ -47,9 +47,7 @@ export function Piece(props: PieceProps) {
 
   return (
     <div className={css.piece} role='button' style={withVars({ col: `${col}em`, row: `${row}em` })}>
-      <div className={css.icon}>
-        {icon}
-      </div>
+      {icon}
     </div>
   );
 }

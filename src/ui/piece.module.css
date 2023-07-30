@@ -8,15 +8,13 @@
   left: var(--col);
   top: var(--row);
   pointer-events: none;
-}
-
-.icon {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+}
+
+.icon {
+  height: 1em;
 }
 
 .whitePiece {

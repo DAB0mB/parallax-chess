@@ -3,30 +3,14 @@
   justify-content: center;
   align-items: center;
   width: 8em;
+  font-size: 1.5em;
   height: 1em;
   position: relative;
   user-select: none;
 }
-
-.stroke {
-  position: absolute;
-  font-size: 1.1em;
-  color: transparent;
-  text-shadow: 0 0 var(--color);
-  transform: scaleX(1.1);
-  filter: invert(1);
-}
-
 .icon {
-  position: absolute;
-  color: transparent;
-  text-shadow: 0 0 var(--color);
-}
-
-.bubble {
-  position: absolute;
-  left: 100%;
-  bottom: 100%;
-  display: flex;
-  width: 1.1em;
+  fill: var(--color);
+  stroke: var(--text);
+  stroke-width: .05em;
+  height: 1em;
 }
