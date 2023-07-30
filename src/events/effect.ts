@@ -1,8 +1,8 @@
 import { Event } from './event';
-import { Emitter, Listener } from './emitter';
+import { Emitter, Listener, Unlistener } from './emitter';
 
 export class Effect extends Event {
-  private readonly unlisteners = new Set<() => void>();
+  private readonly unlisteners = new Set<Unlistener>();
 
   constructor(emitter: Emitter, private readonly events: Event[]) {
     for (const event of events) {

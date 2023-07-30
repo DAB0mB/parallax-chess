@@ -2,10 +2,14 @@ import { King } from './piece/king';
 import { Piece } from './piece/piece';
 
 export class Player {
-  readonly king = this.findKing();
-  readonly color = this.king.color;
+  readonly king: King;
+
+  get color() {
+    return this.king.color;
+  }
 
   constructor(readonly pieces: Piece[]) {
+    this.king = this.findKing();
   }
 
   private findKing() {
@@ -14,6 +18,6 @@ export class Player {
       throw new Error('King not found');
     }
 
-    return king;
+    return king as King;
   }
 }

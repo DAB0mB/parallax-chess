@@ -1,11 +1,12 @@
 import { createState } from '@/events';
+import { State } from '@/events/state';
 import { Color, Position } from '@/game/types';
 import { cacheProperty, invalidateProperty } from '@/utils/class';
 import { Board } from '../board';
 
 export abstract class Piece {
-  readonly moved = createState(this.position);
-  readonly deleted = createState(false);
+  readonly moved: State<Position>;
+  readonly deleted: State<boolean>;
   abstract get symbol(): string;
 
   get board(): Board {
@@ -26,6 +27,8 @@ export abstract class Piece {
   }
 
   constructor(readonly color: Color, public position: Position) {
+    this.moved = createState(this.position);
+    this.deleted = createState(false);
   }
 
   toString() {

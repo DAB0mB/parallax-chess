@@ -1,29 +1,12 @@
 import { createState } from '@/events';
-import { Piece } from './piece/piece';
+import { Unlistener } from '@/events/emitter';
 import { callAll } from '@/utils/function';
+import { Piece } from './piece/piece';
 
 export class Board extends Array<Array<Piece | null>> {
   readonly moved = createState<Piece | null>(null);
   readonly selected = createState<Piece | null>(null);
-
-  private offPieceMoved = callAll.bind(null, this.pieces.map((piece) => {
-    let lastPosition = piece.position;
-
-    return piece.moved.on(() => {
-      const from = lastPosition;
-      const to = piece.position;
-      lastPosition = piece.position;
-
-      const oldPiece = this[to[0]][to[1]];
-      oldPiece?.delete();
-
-      this[from[0]][from[1]] = null;
-      this[to[0]][to[1]] = piece;
-
-      this.unselect();
-      this.moved.reset(piece);
-    });
-  }));
+  protected readonly offPieceMoved: Unlistener;
 
   constructor(readonly pieces: Piece[]) {
     super();
@@ -40,6 +23,25 @@ export class Board extends Array<Array<Piece | null>> {
       this[piece.position[0]][piece.position[1]] = piece;
       piece.board = this;
     }
+
+    this.offPieceMoved = callAll.bind(null, pieces.map((piece) => {
+      let lastPosition = piece.position;
+
+      return piece.moved.on(() => {
+        const from = lastPosition;
+        const to = piece.position;
+        lastPosition = piece.position;
+
+        const oldPiece = this[to[0]][to[1]];
+        oldPiece?.delete();
+
+        this[from[0]][from[1]] = null;
+        this[to[0]][to[1]] = piece;
+
+        this.unselect();
+        this.moved.reset(piece);
+      });
+    }));
   }
 
   toString() {

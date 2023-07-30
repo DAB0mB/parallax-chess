@@ -1,4 +1,5 @@
 export type Listener = () => void;
+export type Unlistener = () => void;
 
 export class Emitter {
   private readonly listeners = new Map<unknown, Set<Listener>>();
@@ -12,7 +13,7 @@ export class Emitter {
     }
   }
 
-  on(key: unknown, listener: Listener) {
+  on(key: unknown, listener: Listener): Unlistener {
     if (!this.listeners.has(key)) {
       this.listeners.set(key, new Set());
     }
