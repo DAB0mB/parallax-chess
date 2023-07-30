@@ -3,7 +3,6 @@
 .game {
   flex: 1;
   background: var(--background);
-  overflow: hidden;
   container-type: inline-size;
 }
 
