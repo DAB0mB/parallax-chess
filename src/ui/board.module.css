@@ -1,5 +1,5 @@
 .board {
-  --boardAngle: 30deg;
+  --boardAngle: 35deg;
   background: var(--darkChecker);
   transform: rotateX(var(--boardAngle));
 }
