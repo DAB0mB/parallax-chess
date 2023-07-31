@@ -2,6 +2,7 @@
 
 .game {
   flex: 1;
+  position: relative;
   background: var(--background);
   container-type: inline-size;
 }
