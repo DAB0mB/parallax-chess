@@ -30,5 +30,5 @@ export function useListener(event: Event, fn: () => void) {
 
   useEffect(() => {
     return event.on((...args) => ref.current(...args));
-  }, []);
+  }, [event]);
 }
