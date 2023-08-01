@@ -36,6 +36,7 @@ export abstract class Piece {
   }
 
   private offMoved() {
+    // override
   }
 
   delete() {
