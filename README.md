@@ -2,7 +2,7 @@
 
 An implementation of a Chess game in React with an event-based store for a cross-component state management.
 
-![parallax-chess-demo](https://github.com/DAB0mB/parallax-chess/assets/7648874/1b0aae35-6c90-43bb-9b95-4a5035297322)
+![parallax-chess-demo](https://github.com/DAB0mB/parallax-chess/assets/7648874/a6cea62d-0e58-4b8a-9696-6023d12074d1)
 
 > https://dab0mb.github.io/parallax-chess/
 
