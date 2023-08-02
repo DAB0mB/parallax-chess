@@ -15,6 +15,7 @@
 .icon {
   display: flex;
   width: 3em;
+  height: 3em;
   padding: .5em;
   opacity: .6;
   fill: var(--text);
