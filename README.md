@@ -1,8 +1,10 @@
 # Parallax Chess
 
-An implementation of a Chess game in React with an event-based store for a cross-component state management.
+An implementation of a Chess game in React.
 
-![parallax-chess-demo](https://github.com/DAB0mB/parallax-chess/assets/7648874/a6cea62d-0e58-4b8a-9696-6023d12074d1)
+<p align="center">
+  <img alt="parallax-chess-demo" src="https://github.com/DAB0mB/parallax-chess/assets/7648874/a6cea62d-0e58-4b8a-9696-6023d12074d1">
+</p>
 
 > https://dab0mb.github.io/parallax-chess/
 
@@ -14,7 +16,7 @@ Install:
 npm install
 ```
 
-Run in dev:
+Dev:
 
 ```
 npm run dev
