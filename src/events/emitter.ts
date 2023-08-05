@@ -1,7 +1,12 @@
 export type Listener = () => void;
 export type Unlistener = () => void;
 
-export class Emitter {
+export interface IEmitter {
+  emit(key: unknown): void;
+  on(key: unknown, listener: Listener): Unlistener;
+}
+
+export class Emitter implements IEmitter {
   private readonly listeners = new Map<unknown, Set<Listener>>();
 
   emit(key: unknown) {
