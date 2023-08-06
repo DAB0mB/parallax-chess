@@ -1,3 +1,5 @@
+import '@react-three/fiber';
+import * as THREE from 'three';
 import { useLayoutEffect, useRef } from 'react';
 import { ChessGameRenderer } from './game';
 
@@ -16,4 +18,12 @@ export function GameUI() {
   return (
     <div style={{ flex: 1, width: '100%' }} ref={containerRef} />
   );
+}
+
+export function Checker() {
+  return (
+    <mesh>
+      <planeGeometry></planeGeometry>
+    </mesh>
+  )
 }

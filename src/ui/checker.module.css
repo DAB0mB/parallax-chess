@@ -2,6 +2,8 @@
   position: absolute;
   width: 1em;
   height: 1em;
+  left: var(--left);
+  top: var(--top);
 }
 
 .checkerDark {

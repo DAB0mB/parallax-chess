@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useMemo } from 'react';
 import { HorizontalAxis, VerticalAxis } from './axis';
 import css from './board.module.css';
-import { Checker } from './checker';
+import { Checker, Checker3D } from './checker';
 import { useGame } from './game_context';
 import { Piece } from './piece';
 import { Selection } from './selection';
@@ -34,5 +34,19 @@ export function Board() {
       </div>
       <HorizontalAxis />
     </div>
+  , [board]);
+}
+
+export function Board3D() {
+  const { board } = useGame();
+
+  return useMemo(() =>
+    <group>
+      {Array.from(board).flatMap((row, i) =>
+        row.map((_piece, j) =>
+          <Checker3D key={`${i},${j}`} row={i} col={j} />
+        )
+      )}
+    </group>
   , [board]);
 }
