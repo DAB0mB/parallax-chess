@@ -8,6 +8,7 @@ import { Board, Board3D } from './board';
 import { Footer } from './footer';
 import css from './game.module.css';
 import { GameContext } from './game_context';
+import { MapControls } from './map_controls';
 import { Player } from './player';
 
 export function Game() {
@@ -43,8 +44,9 @@ export function Game3D() {
       <div className={css.gameBody}>
         <ThemeContext.Provider value={theme}>
           <GameContext.Provider value={game}>
-            <Canvas camera={{position: [0, 0, 10]}}>
+            <Canvas camera={{position: [7, 7, 7]}}>
               <ambientLight />
+              <MapControls />
               <Board3D />
             </Canvas>
             <Footer />
