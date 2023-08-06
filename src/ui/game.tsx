@@ -10,7 +10,6 @@ import css from './game.module.css';
 import { GameContext } from './game_context';
 import { MapControls } from './map_controls';
 import { Player } from './player';
-import { Camera } from 'three';
 
 export function Game() {
   const { game, theme, themeCssVars } = useGameState();
@@ -45,7 +44,7 @@ export function Game3D() {
       <div className={css.gameBody}>
         <ThemeContext.Provider value={theme}>
           <GameContext.Provider value={game}>
-            <Canvas camera={{position: [7, 7, 7]}}>
+            <Canvas camera={{position: [-7, 7, 7]}}>
               <ambientLight />
               <MapControls />
               <Suspense fallback={null}>

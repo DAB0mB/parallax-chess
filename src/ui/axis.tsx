@@ -64,8 +64,8 @@ export function HorizontalAxis(props: AxisProps) {
 
 export function HorizontalAxis3D(props: AxisProps) {
   const [position, rotation]: [Vector3Tuple, Vector3Tuple] = props.flip
-    ? [[0, .01, 4 + UNIT_SIZE / 2], [0, 0, 0]]
-    : [[0, .01, -5 - UNIT_SIZE / 2], [0, Math.PI, 0]];
+    ? [[0, 0, 4 + UNIT_SIZE / 2], [0, 0, 0]]
+    : [[0, 0, -5 - UNIT_SIZE / 2], [0, Math.PI, 0]];
 
   return (
     <group position={position}>
