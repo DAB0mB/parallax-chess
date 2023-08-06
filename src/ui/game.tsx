@@ -3,13 +3,14 @@ import { Game as GameEngine } from '@/game/game';
 import { Color } from '@/game/types';
 import { ThemeContext, dark, light, useThemeCssVars } from '@/theme';
 import { Canvas } from '@react-three/fiber';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Board, Board3D } from './board';
 import { Footer } from './footer';
 import css from './game.module.css';
 import { GameContext } from './game_context';
 import { MapControls } from './map_controls';
 import { Player } from './player';
+import { Camera } from 'three';
 
 export function Game() {
   const { game, theme, themeCssVars } = useGameState();
@@ -47,7 +48,9 @@ export function Game3D() {
             <Canvas camera={{position: [7, 7, 7]}}>
               <ambientLight />
               <MapControls />
-              <Board3D />
+              <Suspense fallback={null}>
+                <Board3D />
+              </Suspense>
             </Canvas>
             <Footer />
           </GameContext.Provider>

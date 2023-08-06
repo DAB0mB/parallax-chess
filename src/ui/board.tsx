@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useMemo } from 'react';
-import { HorizontalAxis, VerticalAxis } from './axis';
+import { HorizontalAxis, HorizontalAxis3D, VerticalAxis, VerticalAxis3D } from './axis';
 import css from './board.module.css';
 import { Checker, Checker3D } from './checker';
 import { useGame } from './game_context';
@@ -47,6 +47,8 @@ export function Board3D() {
           <Checker3D key={`${i},${j}`} row={i} col={j} />
         )
       )}
+      <HorizontalAxis3D />
+      <VerticalAxis3D />
     </group>
   , [board]);
 }
