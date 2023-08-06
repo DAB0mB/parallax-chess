@@ -49,6 +49,8 @@ export function Board3D() {
       )}
       <HorizontalAxis3D />
       <VerticalAxis3D />
+      <HorizontalAxis3D flip />
+      <VerticalAxis3D flip />
     </group>
   , [board]);
 }
