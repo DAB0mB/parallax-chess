@@ -1,9 +1,9 @@
 import { useTheme } from '@/theme';
 import classNames from 'classnames';
+import { useLayoutEffect, useRef } from 'react';
+import { Mesh, Vector3, Vector3Tuple } from 'three';
 import css from './axis.module.css';
 import { TextGeometry } from './text_gemometry';
-import { Mesh, Vector3, Vector3Tuple } from 'three';
-import { useLayoutEffect, useRef } from 'react';
 
 export type AxisProps = {
   flip?: boolean,
@@ -28,8 +28,8 @@ export function VerticalAxis(props: AxisProps) {
 
 export function VerticalAxis3D(props: AxisProps) {
   const [position, rotation]: [Vector3Tuple, Vector3Tuple] = props.flip
-    ? [[-5, .01, UNIT_SIZE / 2], [0, 0, 0]]
-    : [[4, .01, -UNIT_SIZE / 2], [0, Math.PI, 0]];
+    ? [[-.5, .01, UNIT_SIZE / 2], [0, 0, 0]]
+    : [[-.5, .01, -UNIT_SIZE / 2], [0, Math.PI, 0]];
 
   return (
     <group position={position}>
@@ -64,8 +64,8 @@ export function HorizontalAxis(props: AxisProps) {
 
 export function HorizontalAxis3D(props: AxisProps) {
   const [position, rotation]: [Vector3Tuple, Vector3Tuple] = props.flip
-    ? [[0, 0, 4 + UNIT_SIZE / 2], [0, 0, 0]]
-    : [[0, 0, -5 - UNIT_SIZE / 2], [0, Math.PI, 0]];
+    ? [[0, .01, -0.5 +UNIT_SIZE / 2], [0, 0, 0]]
+    : [[0, .01, -0.5 -UNIT_SIZE / 2], [0, Math.PI, 0]];
 
   return (
     <group position={position}>

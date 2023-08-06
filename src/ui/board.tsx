@@ -38,18 +38,21 @@ export function Board() {
   , [board]);
 }
 
+const BORDER_SIZE = .2;
+const AXIS_WIDTH = .5;
+
 export function Board3D() {
   const { board } = useGame();
   const theme = useTheme();
 
   return useMemo(() =>
     <group>
-      <mesh position={[-.5, -.01, -.5]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[8.2, 8.2]} />
+      <mesh position={[-AXIS_WIDTH, -.01, -AXIS_WIDTH]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[8 + BORDER_SIZE, 8 + BORDER_SIZE]} />
         <meshStandardMaterial color={theme.lightChecker} />
       </mesh>
-      <mesh position={[-.5, -.02, -.5]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[9.2, 9.2]} />
+      <mesh position={[-AXIS_WIDTH, -.02, -AXIS_WIDTH]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[9 + BORDER_SIZE, 9 + BORDER_SIZE]} />
         <meshStandardMaterial color={theme.darkChecker} />
       </mesh>
       {Array.from(board).flatMap((row, i) =>
@@ -57,10 +60,18 @@ export function Board3D() {
           <Checker3D key={`${i},${j}`} row={i} col={j} />
         )
       )}
-      <HorizontalAxis3D />
-      <VerticalAxis3D />
-      <HorizontalAxis3D flip />
-      <VerticalAxis3D flip />
+      <group position={[0, 0, -4 - AXIS_WIDTH / 2 - BORDER_SIZE / 2]}>
+        <HorizontalAxis3D />
+      </group>
+      <group position={[4 + AXIS_WIDTH / 2 + BORDER_SIZE / 2, 0, 0]}>
+        <VerticalAxis3D />
+      </group>
+      <group position={[0, 0, 4 + AXIS_WIDTH / 2 + BORDER_SIZE / 2]}>
+        <HorizontalAxis3D flip />
+      </group>
+      <group position={[-4 - AXIS_WIDTH / 2 - BORDER_SIZE / 2, 0, 0]}>
+        <VerticalAxis3D flip />
+      </group>
     </group>
   , [board]);
 }
