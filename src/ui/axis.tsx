@@ -1,7 +1,7 @@
 import { useTheme } from '@/theme';
 import classNames from 'classnames';
 import { useLayoutEffect, useRef } from 'react';
-import { Mesh, Vector3, Vector3Tuple } from 'three';
+import { Box3, Group, Mesh, Vector3, Vector3Tuple } from 'three';
 import css from './axis.module.css';
 import { TextGeometry } from './text_gemometry';
 
@@ -27,12 +27,10 @@ export function VerticalAxis(props: AxisProps) {
 }
 
 export function VerticalAxis3D(props: AxisProps) {
-  const [position, rotation]: [Vector3Tuple, Vector3Tuple] = props.flip
-    ? [[-.5, .01, UNIT_SIZE / 2], [0, 0, 0]]
-    : [[-.5, .01, -UNIT_SIZE / 2], [0, Math.PI, 0]];
+  const { position, rotation, groupRef } = useAxis3DState(props);
 
   return (
-    <group position={position}>
+    <group position={position} ref={groupRef}>
       <Unit position={[0, 0, -4]} rotation={rotation}>8</Unit>
       <Unit position={[0, 0, -3]} rotation={rotation}>7</Unit>
       <Unit position={[0, 0, -2]} rotation={rotation}>6</Unit>
@@ -63,12 +61,10 @@ export function HorizontalAxis(props: AxisProps) {
 }
 
 export function HorizontalAxis3D(props: AxisProps) {
-  const [position, rotation]: [Vector3Tuple, Vector3Tuple] = props.flip
-    ? [[0, .01, -0.5 +UNIT_SIZE / 2], [0, 0, 0]]
-    : [[0, .01, -0.5 -UNIT_SIZE / 2], [0, Math.PI, 0]];
+  const { position, rotation, groupRef } = useAxis3DState(props);
 
   return (
-    <group position={position}>
+    <group position={position} ref={groupRef}>
       <Unit position={[-4, 0, 0]} rotation={rotation}>A</Unit>
       <Unit position={[-3, 0, 0]} rotation={rotation}>B</Unit>
       <Unit position={[-2, 0, 0]} rotation={rotation}>C</Unit>
@@ -79,6 +75,30 @@ export function HorizontalAxis3D(props: AxisProps) {
       <Unit position={[3, 0, 0]} rotation={rotation}>H</Unit>
     </group>
   )
+}
+
+function useAxis3DState(props: AxisProps) {
+  const groupRef = useRef<Group | null>(null);
+  const [position, rotation]: [Vector3Tuple, Vector3Tuple] = props.flip
+    ? [[0, 0, -UNIT_SIZE / 2], [0, Math.PI, 0]]
+    : [[0, 0, UNIT_SIZE / 2], [0, 0, 0]];
+
+  useLayoutEffect(() => {
+    const group = groupRef.current;
+    if (!group) return;
+
+    const box = new Box3().setFromObject(group);
+    const size = new Vector3();
+    box.getSize(size);
+
+    group.position.setX(size.x / 2 * (props.flip ? 1 : -1));
+  });
+
+  return {
+    groupRef,
+    position,
+    rotation,
+  };
 }
 
 const UNIT_SIZE = 1 / 3;
@@ -93,13 +113,7 @@ function Unit(props: { children: string, position: Vector3Tuple, rotation: Vecto
 
     mesh.position.set(...props.position);
     mesh.rotation.set(...props.rotation);
-
-    const size = new Vector3();
-    mesh.geometry.computeBoundingBox();
-    mesh.geometry.boundingBox?.getSize(size);
-
     mesh.rotateX(-Math.PI / 2);
-    mesh.translateX(-size.x / 2);
   });
 
   return (

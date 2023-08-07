@@ -30,7 +30,7 @@ export function Checker3D(props: CheckerProps) {
     : colOdd ? theme.darkChecker : theme.lightChecker;
 
   return (
-    <mesh position={[props.col - 4, 0, props.row - 4]} rotation={[-Math.PI / 2, 0, 0]} onClick={onClick}>
+    <mesh position={[props.col - 3.5, 0, props.row - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={onClick}>
       <planeGeometry args={[1, 1]} />
       <meshStandardMaterial color={color} />
     </mesh>
