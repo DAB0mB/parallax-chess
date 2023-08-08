@@ -3,7 +3,7 @@ import { Board, Board3D } from './board';
 import css from './game.module.css';
 import { useGame } from './game_context';
 import { Player } from './player';
-import { MapControls } from './three/map_controls';
+import { OrbitControls } from './three/orbit_controls';
 
 export function Game() {
   const game = useGame();
@@ -27,7 +27,7 @@ export function Game3D() {
   return (
     <Canvas camera={{position: [-7, 7, 7]}}>
       <ambientLight />
-      <MapControls />
+      <OrbitControls />
       <Board3D />
     </Canvas>
   );
