@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useLayoutEffect, useRef } from 'react';
 import { Box3, Group, Mesh, Vector3, Vector3Tuple } from 'three';
 import css from './axis.module.css';
-import { TextGeometry } from './text_gemometry';
+import { TextGeometry } from './three/text_gemometry';
 
 export type AxisProps = {
   flip?: boolean,
@@ -103,7 +103,13 @@ function useAxis3DState(props: AxisProps) {
 
 const UNIT_SIZE = 1 / 3;
 
-function Unit(props: { children: string, position: Vector3Tuple, rotation: Vector3Tuple }) {
+type UnitProps = {
+  children: string,
+  position: Vector3Tuple,
+  rotation: Vector3Tuple,
+};
+
+function Unit(props: UnitProps) {
   const theme = useTheme();
   const meshRef = useRef<Mesh | null>(null);
 

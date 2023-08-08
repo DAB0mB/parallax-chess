@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import { Game3D } from './ui/game'
+import { App } from './ui/app'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Game3D />
+    <App />
   </React.StrictMode>,
 )
