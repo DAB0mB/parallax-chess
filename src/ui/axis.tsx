@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useLayoutEffect, useRef } from 'react';
 import { Box3, Group, Mesh, Vector3, Vector3Tuple } from 'three';
 import css from './axis.module.css';
-import { TextGeometry } from './three/text_gemometry';
+import { TextGeometry } from './text_gemometry';
 
 export type AxisProps = {
   flip?: boolean,

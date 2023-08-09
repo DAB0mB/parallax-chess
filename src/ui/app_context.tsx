@@ -7,7 +7,7 @@ export const enum RenderMode {
 };
 
 export class App {
-  readonly renderMode = createState<RenderMode>(RenderMode['2D']);
+  readonly renderMode = createState<RenderMode>(RenderMode['3D']);
 }
 
 export const AppContext = createContext<App | null>(null);

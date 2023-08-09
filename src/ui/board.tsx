@@ -77,5 +77,5 @@ export function Board3D() {
         <VerticalAxis3D flip />
       </group>
     </group>
-  , [board]);
+  , [board, theme]);
 }
