@@ -39,6 +39,7 @@ export function Selection() {
 
 export function Selection3D() {
   const { piece, unselect } = useSelectionState();
+  const theme = useTheme();
 
   return useMemo(() => {
     if (!piece) return null;
@@ -49,16 +50,17 @@ export function Selection3D() {
       };
 
       return (
-        <SelectionMesh position={[col - 3.5, 0, row - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={move} />
+        <SelectionMesh color={theme.availableMove} position={[col - 3.5, 0, row - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={move} />
       );
     };
 
     return (
       <>
         {piece.availableMoves.map(renderMove)}
+        <SelectionMesh color={theme.selectedPiece} position={[piece.position[1] - 3.5, 0, piece.position[0] - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={unselect} />
       </>
     );
-  }, [piece]);
+  }, [piece, theme]);
 }
 
 function useSelectionState() {
@@ -76,20 +78,22 @@ function useSelectionState() {
   };
 }
 
-function SelectionMesh(props: MeshProps) {
-  const theme = useTheme();
+type SelectionMeshProps = MeshProps & {
+  color: string,
+};
 
+function SelectionMesh(props: SelectionMeshProps) {
   const selectionShader: THREE.ShaderMaterialParameters = useMemo(() => {
     return {
       uniforms: {
-        borderColor: { value: new THREE.Color(theme.availableMove) },
+        color: { value: new THREE.Color(props.color) },
         borderWidth: { value: 0.01 },
       },
       transparent: true,
       vertexShader: selectionVertGlsl,
       fragmentShader: selectionFragGlsl,
     };
-  }, [theme]);
+  }, [props.color]);
 
   return (
     <mesh {...props}>
