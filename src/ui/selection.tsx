@@ -87,7 +87,7 @@ function SelectionMesh(props: SelectionMeshProps) {
     return {
       uniforms: {
         color: { value: new THREE.Color(props.color) },
-        borderWidth: { value: 0.01 },
+        borderWidth: { value: 0.02 },
       },
       transparent: true,
       vertexShader: selectionVertGlsl,

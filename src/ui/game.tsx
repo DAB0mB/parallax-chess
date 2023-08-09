@@ -27,7 +27,7 @@ export function Game() {
 export function Game3D() {
   return (
     <Canvas camera={{position: [-7, 7, 7]}}>
-      <ambientLight />
+      <ambientLight intensity={2} />
       <OrbitControls />
       <Board3D />
     </Canvas>
