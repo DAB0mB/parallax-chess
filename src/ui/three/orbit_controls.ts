@@ -18,6 +18,7 @@ export function OrbitControls() {
     const orbitControls = new ThreeOrbitControls(three.camera, three.gl.domElement);
     orbitControls.minDistance = 7;
     orbitControls.maxDistance = 16;
+    orbitControls.enablePan = false;
     orbitControls.maxPolarAngle = Math.PI / 2;
     orbitControlsRef.current = orbitControls;
 

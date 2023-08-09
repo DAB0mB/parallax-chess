@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
+import { TextGeometryParameters, TextGeometry as ThreeTextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { Font } from 'three/addons/loaders/FontLoader.js';
 import fontJson from 'three/examples/fonts/helvetiker_regular.typeface.json';
-import { TextGeometryParameters, TextGeometry as ThreeTextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
-import { Font } from 'three/examples/jsm/loaders/FontLoader.js';
 
 export type TextGeometryProps = Omit<TextGeometryParameters, 'font'> & {
   children: string,

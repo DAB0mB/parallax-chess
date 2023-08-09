@@ -6,7 +6,7 @@ import css from './board.module.css';
 import { Checker, Checker3D } from './checker';
 import { useGame } from './game_context';
 import { Piece } from './piece';
-import { Selection } from './selection';
+import { Selection, Selection3D } from './selection';
 
 export function Board() {
   const { board } = useGame();
@@ -58,6 +58,7 @@ export function Board3D() {
         <planeGeometry args={[AXIS_SURFACE, AXIS_SURFACE]} />
         <meshStandardMaterial color={theme.darkChecker} />
       </mesh>
+      <Selection3D />
       {Array.from(board).flatMap((row, i) =>
         row.map((_piece, j) =>
           <Checker3D key={`${i},${j}`} row={i} col={j} />
