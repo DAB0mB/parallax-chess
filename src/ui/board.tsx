@@ -54,7 +54,9 @@ export function Board3D() {
         <planeGeometry args={[AXIS_SURFACE, AXIS_SURFACE]} />
         <meshMatcapMaterial color={theme.darkChecker} />
       </mesh>
-      <Selection3D />
+      <group position={[0, .01, 0]}>
+        <Selection3D />
+      </group>
       {Array.from(board).flatMap((row, i) =>
         row.map((_piece, j) =>
           <Checker3D key={`${i},${j}`} row={i} col={j} />

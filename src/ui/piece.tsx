@@ -27,8 +27,6 @@ export function Piece(props: PieceProps) {
   );
 }
 
-import.meta.url;
-
 export function Piece3D(props: PieceProps) {
   const { deleted, row, col } = usePieceState(props);
   const geometry = usePieceGeometry(props.piece);
