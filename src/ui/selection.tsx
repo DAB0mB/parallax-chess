@@ -43,7 +43,7 @@ export function Selection3D() {
     return piece.availableMoves.map(([row, col]) =>
       <SelectionMesh key={`${row},${col}`} color={theme.availableMove} position={[col - 3.5, 0, row - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={() => move([row, col])} />
     );
-  }, [piece, move]);
+  }, [theme, piece, move]);
 
   if (!piece) return null;
 

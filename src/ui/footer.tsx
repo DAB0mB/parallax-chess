@@ -13,7 +13,7 @@ export function Footer() {
 
   return (
     <div className={css.footer}>
-      <a href={import.meta.env.VITE_REPO_URL} className={css.icon}>
+      <a href={import.meta.env.VITE_REPO_URL as string} className={css.icon}>
         <GithubIcon />
       </a>
       <div role='button' className={css.icon} onClick={changeRenderMode}>

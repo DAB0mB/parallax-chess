@@ -4,7 +4,7 @@ import { createContext, useContext } from 'react';
 export const enum RenderMode {
   '2D' = '2D',
   '3D' = '3D'
-};
+}
 
 export class App {
   readonly renderMode = createState<RenderMode>(RenderMode['3D']);

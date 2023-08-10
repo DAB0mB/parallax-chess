@@ -57,11 +57,11 @@ export function Piece(props: PieceProps) {
 }
 
 export function Piece3D(props: PieceProps) {
-  const group: Group = useLoader(OBJLoader, chessPiecesObj);
+  const group = useLoader(OBJLoader, chessPiecesObj) as Group;
   const model = useMemo(() => group.getObjectByName(props.piece.symbol), [group, props.piece]);
   if (!(model instanceof Mesh)) throw new Error(`Piece model "${props.piece.symbol}" not found`);
 
-  const geometry: BufferGeometry = model.geometry;
+  const geometry = model.geometry as BufferGeometry;
   const theme = useTheme();
   const { deleted, row, col } = usePieceState(props);
   if (deleted) return null;
