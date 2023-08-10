@@ -14,11 +14,10 @@ import whiteRookSvg from '@/assets/chess_pieces/white_rook.svg';
 import { noopEvent } from '@/events';
 import { useEvent, useValue } from '@/events/hooks';
 import { Pawn } from '@/game/piece/pawn';
-import { Piece as GamePiece } from '@/game/piece/piece';
+import { Piece as PieceState } from '@/game/piece/piece';
 import { Color } from '@/game/types';
 import { useTheme } from '@/theme';
 import { withVars } from '@/utils/style';
-import { useLoader } from '@react-three/fiber';
 import { useMemo } from 'react';
 import { BufferGeometry, Group, Mesh, Vector3Tuple } from 'three';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
@@ -40,7 +39,7 @@ export const PieceIcons = {
 } as const;
 
 export type PieceProps = {
-  piece: GamePiece,
+  piece: PieceState,
 };
 
 export function Piece(props: PieceProps) {
@@ -57,13 +56,9 @@ export function Piece(props: PieceProps) {
 }
 
 export function Piece3D(props: PieceProps) {
-  const group = useLoader(OBJLoader, chessPiecesObj) as Group;
-  const model = useMemo(() => group.getObjectByName(props.piece.symbol), [group, props.piece]);
-  if (!(model instanceof Mesh)) throw new Error(`Piece model "${props.piece.symbol}" not found`);
-
-  const geometry = model.geometry as BufferGeometry;
-  const theme = useTheme();
   const { deleted, row, col } = usePieceState(props);
+  const geometry = usePieceGeometry(props.piece);
+  const theme = useTheme();
   if (deleted) return null;
 
   const [color, rotation]: [string, Vector3Tuple] = props.piece.color === Color.WHITE ?
@@ -89,4 +84,20 @@ function usePieceState(props: PieceProps) {
     row,
     col,
   };
+}
+
+let piecesObjBuffer: Group;
+
+function usePieceGeometry(piece: PieceState) {
+  if (!piecesObjBuffer) {
+    const loader = new OBJLoader();
+    throw loader.loadAsync(chessPiecesObj).then((buffer) => {
+      piecesObjBuffer = buffer;
+    });
+  }
+
+  const model = useMemo(() => piecesObjBuffer.getObjectByName(piece.symbol), [piece]);
+  if (!(model instanceof Mesh)) throw new Error(`Piece model "${piece.symbol}" not found`);
+
+  return model.geometry as BufferGeometry;
 }

@@ -1,5 +1,7 @@
 import { useValue } from '@/events/hooks';
 import { Position } from '@/game/types';
+import selectionFragGlsl from '@/shaders/selection.frag.glsl';
+import selectionVertGlsl from '@/shaders/selection.vert.glsl';
 import { useTheme } from '@/theme';
 import { useCaller } from '@/utils/hooks';
 import { withVars } from '@/utils/style';
@@ -8,9 +10,7 @@ import classNames from 'classnames';
 import { useMemo } from 'react';
 import * as THREE from 'three';
 import { useGame } from './game_context';
-import selectionFragGlsl from './selection.frag.glsl';
 import css from './selection.module.css';
-import selectionVertGlsl from './selection.vert.glsl';
 
 export function Selection() {
   const { piece, move, unselect } = useSelectionState();
