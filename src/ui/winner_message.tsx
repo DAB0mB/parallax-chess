@@ -26,7 +26,7 @@ export function WinnerMessage3D() {
   );
 }
 
-export function useWinnerMessageState() {
+function useWinnerMessageState() {
   const game = useGame();
   const l = useLocale();
   const winner = useValue(game.winner);

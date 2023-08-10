@@ -4,6 +4,7 @@ export type Theme = typeof light;
 
 export const light = {
   text: '#000',
+  winnerMessage3D: '#000',
   background: '#eee',
   blackPiece: '#000',
   whitePiece: '#fff',
