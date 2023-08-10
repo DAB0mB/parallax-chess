@@ -50,7 +50,7 @@ export function Selection3D() {
       };
 
       return (
-        <SelectionMesh color={theme.availableMove} position={[col - 3.5, 0, row - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={move} />
+        <SelectionMesh key={`${row},${col}`} color={theme.availableMove} position={[col - 3.5, 0, row - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={move} />
       );
     };
 

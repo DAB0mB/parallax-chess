@@ -4,6 +4,7 @@ import blackKnightSvg from '@/assets/chess_pieces/black_knight.svg';
 import blackPawnSvg from '@/assets/chess_pieces/black_pawn.svg';
 import blackQueenSvg from '@/assets/chess_pieces/black_queen.svg';
 import blackRookSvg from '@/assets/chess_pieces/black_rook.svg';
+import chessPiecesObj from '@/assets/chess_pieces/chess_pieces.obj?url';
 import whiteBishopSvg from '@/assets/chess_pieces/white_bishop.svg';
 import whiteKingSvg from '@/assets/chess_pieces/white_king.svg';
 import whiteKnightSvg from '@/assets/chess_pieces/white_knight.svg';
@@ -14,7 +15,13 @@ import { noopEvent } from '@/events';
 import { useEvent, useValue } from '@/events/hooks';
 import { Pawn } from '@/game/piece/pawn';
 import { Piece as GamePiece } from '@/game/piece/piece';
+import { Color } from '@/game/types';
+import { useTheme } from '@/theme';
 import { withVars } from '@/utils/style';
+import { useLoader } from '@react-three/fiber';
+import { useMemo } from 'react';
+import { BufferGeometry, Group, Mesh, Vector3 } from 'three';
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import css from './piece.module.css';
 
 export const PieceIcons = {
@@ -49,5 +56,31 @@ export function Piece(props: PieceProps) {
     <div className={css.piece} role='button' style={withVars({ col: `${col}em`, row: `${row}em` })}>
       <img className={css.icon} src={icon} />
     </div>
+  );
+}
+
+export function Piece3D(props: PieceProps) {
+  const group: Group = useLoader(OBJLoader, chessPiecesObj);
+  const model = useMemo(() => group.getObjectByName(props.piece.symbol), [group, props.piece]);
+  if (!(model instanceof Mesh)) throw new Error(`Piece model "${props.piece.symbol}" not found`);
+
+  const geometry = useMemo(() => {
+    const geometry: BufferGeometry = model.geometry;
+    const out = new Vector3();
+    geometry.computeBoundingBox();
+    geometry.boundingBox?.getCenter(out);
+    geometry.translate(-out.x, 0, -out.z);
+    return geometry;
+  }, [model]);
+
+  const theme = useTheme();
+  const [row, col] = useValue(props.piece.moved);
+  const color = props.piece.color === Color.WHITE ? theme.whitePiece : theme.blackPiece;
+
+  return (
+    <mesh scale={8} position={[col - 3.5, 0, row - 3.5]}>
+      <primitive object={geometry} />
+      <meshMatcapMaterial color={color} />
+    </mesh>
   );
 }

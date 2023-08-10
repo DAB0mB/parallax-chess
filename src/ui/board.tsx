@@ -5,7 +5,7 @@ import { HorizontalAxis, HorizontalAxis3D, VerticalAxis, VerticalAxis3D } from '
 import css from './board.module.css';
 import { Checker, Checker3D } from './checker';
 import { useGame } from './game_context';
-import { Piece } from './piece';
+import { Piece, Piece3D } from './piece';
 import { Selection, Selection3D } from './selection';
 
 export function Board() {
@@ -17,18 +17,14 @@ export function Board() {
       <div className={css.hAxes}>
         <VerticalAxis />
         <div className={css.checkers}>
-          {
-            Array.from(board).flatMap((row, i) =>
-              row.map((_piece, j) =>
-                <Checker key={`${i},${j}`} row={i} col={j} />
-              )
+          {Array.from(board).flatMap((row, i) =>
+            row.map((_piece, j) =>
+              <Checker key={`${i},${j}`} row={i} col={j} />
             )
-          }
-          {
-            board.pieces.map((piece) =>
-              <Piece key={piece.position.toString()} piece={piece} />
-            )
-          }
+          )}
+          {board.pieces.map((piece) =>
+            <Piece key={piece.position.toString()} piece={piece} />
+          )}
           <Selection />
         </div>
         <VerticalAxis flip />
@@ -63,6 +59,9 @@ export function Board3D() {
         row.map((_piece, j) =>
           <Checker3D key={`${i},${j}`} row={i} col={j} />
         )
+      )}
+      {board.pieces.map((piece) =>
+        <Piece3D key={piece.position.toString()} piece={piece} />
       )}
       <group position={[4, 0, AXIS_OFFSET]}>
         <HorizontalAxis3D />

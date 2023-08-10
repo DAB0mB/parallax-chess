@@ -13,8 +13,8 @@ void main() {
 
     vec3 noColor = vec3(0.0, 0.0, 0.0);
     float dist = distance(vUv, vec2(0.5));
-    float gradient = smoothstep(-0.35, 1.0, dist);
+    float gradient = smoothstep(-0.5, 1.0, dist);
     vec3 finalColor = mix(noColor, color, gradient);
 
-    gl_FragColor = vec4(finalColor, gradient);
+    gl_FragColor = vec4(finalColor, gradient * 0.75);
 }
