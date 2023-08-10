@@ -29,8 +29,8 @@ export function App() {
               <GameContext.Provider value={game}>
                 {renderMode === RenderMode['2D'] ? <Game /> : <Game3D />}
               </GameContext.Provider>
-              <Footer />
             </Suspense>
+            <Footer />
           </ThemeContext.Provider>
         </AppContext.Provider>
       </div>
