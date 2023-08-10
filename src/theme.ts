@@ -8,7 +8,7 @@ export const light = {
   blackPiece: '#000',
   whitePiece: '#fff',
   blackPiece3D: '#555',
-  whitePiece3D: '#eee',
+  whitePiece3D: '#ccc',
   lightChecker: '#ffcf9f',
   darkChecker: '#d18b47',
   axis: '#fff',

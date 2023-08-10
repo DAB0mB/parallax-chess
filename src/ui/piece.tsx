@@ -1,16 +1,4 @@
-import blackBishopSvg from '@/assets/chess_pieces/black_bishop.svg';
-import blackKingSvg from '@/assets/chess_pieces/black_king.svg';
-import blackKnightSvg from '@/assets/chess_pieces/black_knight.svg';
-import blackPawnSvg from '@/assets/chess_pieces/black_pawn.svg';
-import blackQueenSvg from '@/assets/chess_pieces/black_queen.svg';
-import blackRookSvg from '@/assets/chess_pieces/black_rook.svg';
-import chessPiecesObj from '@/assets/chess_pieces/chess_pieces.obj?url';
-import whiteBishopSvg from '@/assets/chess_pieces/white_bishop.svg';
-import whiteKingSvg from '@/assets/chess_pieces/white_king.svg';
-import whiteKnightSvg from '@/assets/chess_pieces/white_knight.svg';
-import whitePawnSvg from '@/assets/chess_pieces/white_pawn.svg';
-import whiteQueenSvg from '@/assets/chess_pieces/white_queen.svg';
-import whiteRookSvg from '@/assets/chess_pieces/white_rook.svg';
+import chessPiecesObj from '@/assets/chess_pieces.obj?url';
 import { noopEvent } from '@/events';
 import { useEvent, useValue } from '@/events/hooks';
 import { Pawn } from '@/game/piece/pawn';
@@ -23,37 +11,23 @@ import { BufferGeometry, Group, Mesh, Vector3Tuple } from 'three';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import css from './piece.module.css';
 
-export const PieceIcons = {
-  BP: URL.createObjectURL(new Blob([blackPawnSvg], { type: 'image/svg+xml' })),
-  BR: URL.createObjectURL(new Blob([blackRookSvg], { type: 'image/svg+xml' })),
-  BB: URL.createObjectURL(new Blob([blackBishopSvg], { type: 'image/svg+xml' })),
-  BN: URL.createObjectURL(new Blob([blackKnightSvg], { type: 'image/svg+xml' })),
-  BQ: URL.createObjectURL(new Blob([blackQueenSvg], { type: 'image/svg+xml' })),
-  BK: URL.createObjectURL(new Blob([blackKingSvg], { type: 'image/svg+xml' })),
-  WP: URL.createObjectURL(new Blob([whitePawnSvg], { type: 'image/svg+xml' })),
-  WR: URL.createObjectURL(new Blob([whiteRookSvg], { type: 'image/svg+xml' })),
-  WB: URL.createObjectURL(new Blob([whiteBishopSvg], { type: 'image/svg+xml' })),
-  WN: URL.createObjectURL(new Blob([whiteKnightSvg], { type: 'image/svg+xml' })),
-  WQ: URL.createObjectURL(new Blob([whiteQueenSvg], { type: 'image/svg+xml' })),
-  WK: URL.createObjectURL(new Blob([whiteKingSvg], { type: 'image/svg+xml' })),
-} as const;
-
 export type PieceProps = {
   piece: PieceState,
 };
 
 export function Piece(props: PieceProps) {
   const { deleted, row, col } = usePieceState(props);
+  const svg = usePieceSvg(props.piece);
   if (deleted) return null;
-
-  const icon = PieceIcons[props.piece.toString() as keyof typeof PieceIcons];
 
   return (
     <div className={css.piece} role='button' style={withVars({ col: `${col}em`, row: `${row}em` })}>
-      <img className={css.icon} src={icon} />
+      <div className={css.icon} dangerouslySetInnerHTML={{ __html: svg }} />
     </div>
   );
 }
+
+import.meta.url;
 
 export function Piece3D(props: PieceProps) {
   const { deleted, row, col } = usePieceState(props);
@@ -84,6 +58,21 @@ function usePieceState(props: PieceProps) {
     row,
     col,
   };
+}
+
+let piecesSvgBuffer: typeof import('@/bundles/chess_pieces');
+
+function usePieceSvg(piece: PieceState) {
+  if (!piecesSvgBuffer) {
+    throw import('@/bundles/chess_pieces').then((buffer) => {
+      piecesSvgBuffer = buffer;
+    });
+  }
+
+  const svg = piecesSvgBuffer[piece.toString() as keyof typeof piecesSvgBuffer];
+  if (typeof svg != 'string') throw new Error(`Piece svg "${piece.toString()}" not found`);
+
+  return svg;
 }
 
 let piecesObjBuffer: Group;

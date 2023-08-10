@@ -19,7 +19,7 @@ export function useObjMemo<T extends Record<string, unknown>>(obj: T) {
   if (!shallowCompare(ref.current, obj)) {
     ref.current = obj;
   }
-  return ref.current as T;
+  return ref.current ;
 }
 
 const shallowCompare = (obj1: Record<string, unknown>, obj2: Record<string, unknown>) =>

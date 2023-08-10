@@ -1,0 +1,12 @@
+export { default as BB } from '@/assets/black_bishop.svg';
+export { default as BK } from '@/assets/black_king.svg';
+export { default as BN } from '@/assets/black_knight.svg';
+export { default as BP } from '@/assets/black_pawn.svg';
+export { default as BQ } from '@/assets/black_queen.svg';
+export { default as BR } from '@/assets/black_rook.svg';
+export { default as WB } from '@/assets/white_bishop.svg';
+export { default as WK } from '@/assets/white_king.svg';
+export { default as WN } from '@/assets/white_knight.svg';
+export { default as WP } from '@/assets/white_pawn.svg';
+export { default as WQ } from '@/assets/white_queen.svg';
+export { default as WR } from '@/assets/white_rook.svg';

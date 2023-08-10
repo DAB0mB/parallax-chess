@@ -32,7 +32,7 @@ export function Checker3D(props: CheckerProps) {
   return (
     <mesh position={[props.col - 3.5, 0, props.row - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={onClick}>
       <planeGeometry args={[1, 1]} />
-      <meshStandardMaterial color={color} />
+      <meshMatcapMaterial color={color} />
     </mesh>
   );
 }

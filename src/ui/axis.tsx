@@ -90,7 +90,6 @@ function useAxis3DState(props: AxisProps) {
     const box = new Box3().setFromObject(group);
     const size = new Vector3();
     box.getSize(size);
-
     group.position.setX(size.x / 2 * (props.flip ? 1 : -1));
   });
 
@@ -125,7 +124,7 @@ function Unit(props: UnitProps) {
   return (
     <mesh ref={meshRef}>
       <TextGeometry size={UNIT_SIZE} height={0}>{props.children}</TextGeometry>
-      <meshStandardMaterial color={theme.axis} />
+      <meshMatcapMaterial color={theme.axis} />
     </mesh>
   );
 }
