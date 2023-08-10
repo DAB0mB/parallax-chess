@@ -20,7 +20,7 @@ import { useTheme } from '@/theme';
 import { withVars } from '@/utils/style';
 import { useLoader } from '@react-three/fiber';
 import { useMemo } from 'react';
-import { BufferGeometry, Group, Mesh, Vector3 } from 'three';
+import { BufferGeometry, Group, Mesh, Vector3Tuple } from 'three';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import css from './piece.module.css';
 
@@ -44,13 +44,11 @@ export type PieceProps = {
 };
 
 export function Piece(props: PieceProps) {
+  const pieceState = usePieceState(props);
+  if (!pieceState) return null;
+
+  const { row, col } = pieceState;
   const icon = PieceIcons[props.piece.toString() as keyof typeof PieceIcons];
-  const deleted = useValue(props.piece.deleted);
-  const [row, col] = useValue(props.piece.moved);
-
-  useEvent(props.piece instanceof Pawn ? props.piece.upgraded : noopEvent)
-
-  if (deleted) return null;
 
   return (
     <div className={css.piece} role='button' style={withVars({ col: `${col}em`, row: `${row}em` })}>
@@ -64,23 +62,34 @@ export function Piece3D(props: PieceProps) {
   const model = useMemo(() => group.getObjectByName(props.piece.symbol), [group, props.piece]);
   if (!(model instanceof Mesh)) throw new Error(`Piece model "${props.piece.symbol}" not found`);
 
-  const geometry = useMemo(() => {
-    const geometry: BufferGeometry = model.geometry;
-    const out = new Vector3();
-    geometry.computeBoundingBox();
-    geometry.boundingBox?.getCenter(out);
-    geometry.translate(-out.x, 0, -out.z);
-    return geometry;
-  }, [model]);
-
+  const geometry: BufferGeometry = model.geometry;
   const theme = useTheme();
-  const [row, col] = useValue(props.piece.moved);
-  const color = props.piece.color === Color.WHITE ? theme.whitePiece : theme.blackPiece;
+  const pieceState = usePieceState(props);
+  if (!pieceState) return null;
+
+  const { row, col } = pieceState;
+  const [color, rotation]: [string, Vector3Tuple] = props.piece.color === Color.WHITE ?
+    [theme.whitePiece3D, [0, 0, 0]] :
+    [theme.blackPiece3D, [0, Math.PI, 0]];
 
   return (
-    <mesh scale={8} position={[col - 3.5, 0, row - 3.5]}>
+    <mesh position={[col - 3.5, 0, row - 3.5]} rotation={rotation}>
       <primitive object={geometry} />
       <meshMatcapMaterial color={color} />
     </mesh>
   );
+}
+
+function usePieceState(props: PieceProps) {
+  const deleted = useValue(props.piece.deleted);
+  const [row, col] = useValue(props.piece.moved);
+
+  useEvent(props.piece instanceof Pawn ? props.piece.upgraded : noopEvent)
+
+  if (deleted) return null;
+
+  return {
+    row,
+    col,
+  };
 }
