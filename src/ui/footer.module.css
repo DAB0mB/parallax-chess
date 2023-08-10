@@ -3,7 +3,7 @@
 
   position: absolute;
   bottom: 0;
-  width: calc(100% - gap * 2);
+  width: calc(100% - gap * 4);
   padding: gap 0;
   margin-top: gap;
   gap: gap;
@@ -16,7 +16,7 @@
   display: flex;
   width: 3em;
   height: 3em;
-  padding: .5em;
   opacity: .6;
   fill: var(--text);
+  cursor: pointer;
 }

@@ -21,14 +21,3 @@
   position: absolute;
   color: var(--whitePiece);
 }
-
-.pieceStroke {
-  position: absolute;
-  color: var(--blackPiece);
-}
-
-.blackPiece {
-  position: absolute;
-  transform: rotateY(180deg);
-  color: var(--blackPiece);
-}

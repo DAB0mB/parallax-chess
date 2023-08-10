@@ -5,3 +5,16 @@
   color: var(--text);
   user-select: none;
 }
+
+.winnerMessage3D {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.5);
+  width: 100%;
+  padding: 1em;
+  pointer-events: none;
+  user-select: none;
+  position: absolute;
+  font-size: 4em;
+}

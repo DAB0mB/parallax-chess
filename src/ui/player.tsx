@@ -1,5 +1,5 @@
 import { useValue } from '@/events/hooks';
-import { Player as GamePlayer } from '@/game/player';
+import { Player as PlayerState } from '@/game/player';
 import { Color } from '@/game/types';
 import { withVars } from '@/utils/style';
 import { useGame } from './game_context';
@@ -7,7 +7,7 @@ import css from './player.module.css';
 import { WinnerMessage } from './winner_message';
 
 export type PlayerProps = {
-  player: GamePlayer,
+  player: PlayerState,
 };
 
 export function Player(props: PlayerProps) {
@@ -17,7 +17,7 @@ export function Player(props: PlayerProps) {
   const color = props.player.color === Color.WHITE ? 'var(--whitePiece)' : 'var(--blackPiece)';
 
   const children = winner && winner !== props.player ?
-    <WinnerMessage winnerColor={winner.color} /> : currentPlayer === props.player ?
+    <WinnerMessage /> : currentPlayer === props.player ?
     <UserIcon /> : null;
 
   return (

@@ -1,51 +1,67 @@
-import { useListener } from '@/events/hooks';
-import { Game as GameEngine } from '@/game/game';
-import { Color } from '@/game/types';
-import { ThemeContext, dark, light, useThemeCssVars } from '@/theme';
-import { useState } from 'react';
-import { Board } from './board';
-import { Footer } from './footer';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useLayoutEffect, useRef } from 'react';
+import { OrbitControls as ThreeOrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { Board, Board3D } from './board';
 import css from './game.module.css';
-import { GameContext } from './game_context';
+import { useGame } from './game_context';
 import { Player } from './player';
+import { WinnerMessage3D } from './winner_message';
 
 export function Game() {
-  const [game] = useState(() => new GameEngine());
-  const [theme, setTheme] = useState(() => getTheme(game));
-  const themeCssVars = useThemeCssVars(theme);
-
-  useListener(game.currentPlayer, () => {
-    setTheme(getTheme(game));
-  });
+  const game = useGame();
 
   return (
-    <div className={css.game} style={themeCssVars}>
-      <div className={css.gameBody}>
-        <ThemeContext.Provider value={theme}>
-          <GameContext.Provider value={game}>
-            <div className={css.blackPlayer}>
-              <Player player={game.blackPlayer} />
-            </div>
-            <div className={css.gameBoard}>
-              <Board />
-            </div>
-            <div className={css.whitePlayer}>
-              <Player player={game.whitePlayer} />
-            </div>
-            <Footer />
-          </GameContext.Provider>
-        </ThemeContext.Provider>
+    <div className={css.game}>
+      <div className={css.blackPlayer}>
+        <Player player={game.blackPlayer} />
+      </div>
+      <div className={css.gameBoard}>
+        <Board />
+      </div>
+      <div className={css.whitePlayer}>
+        <Player player={game.whitePlayer} />
       </div>
     </div>
   );
 }
 
-function getTheme(game: GameEngine) {
-  const currentPlayer = game.currentPlayer.value;
+export function Game3D() {
+  return (
+    <>
+      <Canvas camera={{position: [-7, 7, 7]}}>
+        <OrbitControls />
+        <Board3D />
+      </Canvas>
+      <WinnerMessage3D />
+    </>
+  );
+}
 
-  if (currentPlayer) {
-    return currentPlayer.color === Color.WHITE ? light : dark;
-  }
+function OrbitControls() {
+  const three = useThree();
+  const orbitControlsRef = useRef<ThreeOrbitControls | null>(null);
 
-  return light;
+  useFrame(() => {
+    const orbitControls = orbitControlsRef.current;
+
+    if (orbitControls) {
+      orbitControls.update();
+    }
+  });
+
+  useLayoutEffect(() => {
+    const orbitControls = new ThreeOrbitControls(three.camera, three.gl.domElement);
+    orbitControls.minDistance = 7;
+    orbitControls.maxDistance = 16;
+    orbitControls.enablePan = false;
+    orbitControls.maxPolarAngle = Math.PI / 2;
+    orbitControlsRef.current = orbitControls;
+
+    return () => {
+      orbitControls.dispose();
+      orbitControlsRef.current = null;
+    };
+  }, [three.camera, three.gl.domElement]);
+
+  return null;
 }

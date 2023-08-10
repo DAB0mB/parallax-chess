@@ -1,7 +1,7 @@
-import { Emitter, Listener } from './emitter';
+import { IEmitter, Listener } from './emitter';
 
 export class Event {
-  constructor(readonly emitter: Emitter) {
+  constructor(readonly emitter: IEmitter) {
   }
 
   emit() {
