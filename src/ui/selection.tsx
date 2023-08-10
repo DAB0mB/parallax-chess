@@ -13,59 +13,57 @@ import css from './selection.module.css';
 import selectionVertGlsl from './selection.vert.glsl';
 
 export function Selection() {
-  const { piece, unselect } = useSelectionState();
+  const { piece, move, unselect } = useSelectionState();
 
-  return useMemo(() => {
+  const availableMovesChildren = useMemo(() => {
     if (!piece) return null;
 
-    const renderMove = ([row, col]: Position) => {
-      const move = () => {
-        piece.move([row, col]);
-      };
-
-      return (
-        <div key={`${row},${col}`} className={css.availableMove} role='button' style={withVars({ row: `${row}em`, col: `${col}em` })} onClick={move} />
-      )
-    };
-
-    return (
-      <>
-        {piece.availableMoves.map(renderMove)}
-        <div role='button' onClick={unselect} className={classNames(css.availableMove, css.selectedPiece)} style={withVars({ row: `${piece.position[0]}em`, col: `${piece.position[1]}em` })} />
-      </>
+    return piece.availableMoves.map(([row, col]) =>
+      <div key={`${row},${col}`} className={css.availableMove} role='button' style={withVars({ row: `${row}em`, col: `${col}em` })} onClick={() => move([row, col])} />
     );
-  }, [piece]);
+  }, [piece, move]);
+
+  if (!piece) return null;
+
+  return (
+    <>
+      {availableMovesChildren}
+      <div role='button' onClick={unselect} className={classNames(css.availableMove, css.selectedPiece)} style={withVars({ row: `${piece.position[0]}em`, col: `${piece.position[1]}em` })} />
+    </>
+  );
 }
 
 export function Selection3D() {
-  const { piece, unselect } = useSelectionState();
+  const { piece, move, unselect } = useSelectionState();
   const theme = useTheme();
 
-  return useMemo(() => {
+  const availableMovesChildren = useMemo(() => {
     if (!piece) return null;
 
-    const renderMove = ([row, col]: Position) => {
-      const move = () => {
-        piece.move([row, col]);
-      };
-
-      return (
-        <SelectionMesh key={`${row},${col}`} color={theme.availableMove} position={[col - 3.5, 0, row - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={move} />
-      );
-    };
-
-    return (
-      <>
-        {piece.availableMoves.map(renderMove)}
-        <SelectionMesh color={theme.selectedPiece} position={[piece.position[1] - 3.5, 0, piece.position[0] - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={unselect} />
-      </>
+    return piece.availableMoves.map(([row, col]) =>
+      <SelectionMesh key={`${row},${col}`} color={theme.availableMove} position={[col - 3.5, 0, row - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={() => move([row, col])} />
     );
-  }, [piece, theme]);
+  }, [piece, move]);
+
+  if (!piece) return null;
+
+  return (
+    <>
+      {availableMovesChildren}
+      <SelectionMesh color={theme.selectedPiece} position={[piece.position[1] - 3.5, 0, piece.position[0] - 3.5]} rotation={[-Math.PI / 2, 0, 0]} onClick={unselect} />
+    </>
+  );
 }
 
 function useSelectionState() {
   const game = useGame();
   const piece = useValue(game.board.selected);
+
+  const move = useCaller((position: Position) => {
+    if (piece) {
+      piece.move(position);
+    }
+  });
 
   const unselect = useCaller(() => {
     game.board.unselect();
@@ -74,6 +72,7 @@ function useSelectionState() {
   return {
     game,
     piece,
+    move,
     unselect,
   };
 }

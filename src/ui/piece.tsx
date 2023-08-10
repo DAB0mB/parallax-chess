@@ -44,10 +44,9 @@ export type PieceProps = {
 };
 
 export function Piece(props: PieceProps) {
-  const pieceState = usePieceState(props);
-  if (!pieceState) return null;
+  const { deleted, row, col } = usePieceState(props);
+  if (deleted) return null;
 
-  const { row, col } = pieceState;
   const icon = PieceIcons[props.piece.toString() as keyof typeof PieceIcons];
 
   return (
@@ -64,10 +63,9 @@ export function Piece3D(props: PieceProps) {
 
   const geometry: BufferGeometry = model.geometry;
   const theme = useTheme();
-  const pieceState = usePieceState(props);
-  if (!pieceState) return null;
+  const { deleted, row, col } = usePieceState(props);
+  if (deleted) return null;
 
-  const { row, col } = pieceState;
   const [color, rotation]: [string, Vector3Tuple] = props.piece.color === Color.WHITE ?
     [theme.whitePiece3D, [0, 0, 0]] :
     [theme.blackPiece3D, [0, Math.PI, 0]];
@@ -86,9 +84,8 @@ function usePieceState(props: PieceProps) {
 
   useEvent(props.piece instanceof Pawn ? props.piece.upgraded : noopEvent)
 
-  if (deleted) return null;
-
   return {
+    deleted,
     row,
     col,
   };
