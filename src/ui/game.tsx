@@ -5,6 +5,7 @@ import { Board, Board3D } from './board';
 import css from './game.module.css';
 import { useGame } from './game_context';
 import { Player } from './player';
+import { WinnerMessage3D } from './winner_message';
 
 export function Game() {
   const game = useGame();
@@ -26,10 +27,13 @@ export function Game() {
 
 export function Game3D() {
   return (
-    <Canvas camera={{position: [-7, 7, 7]}}>
-      <OrbitControls />
-      <Board3D />
-    </Canvas>
+    <>
+      <Canvas camera={{position: [-7, 7, 7]}}>
+        <OrbitControls />
+        <Board3D />
+      </Canvas>
+      <WinnerMessage3D />
+    </>
   );
 }
 

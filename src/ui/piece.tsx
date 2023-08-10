@@ -22,7 +22,7 @@ export function Piece(props: PieceProps) {
 
   return (
     <div className={css.piece} role='button' style={withVars({ col: `${col}em`, row: `${row}em` })}>
-      <div className={css.icon} dangerouslySetInnerHTML={{ __html: svg }} />
+      <img className={css.icon} src={svg} />
     </div>
   );
 }

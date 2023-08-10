@@ -17,7 +17,7 @@ export function Player(props: PlayerProps) {
   const color = props.player.color === Color.WHITE ? 'var(--whitePiece)' : 'var(--blackPiece)';
 
   const children = winner && winner !== props.player ?
-    <WinnerMessage winnerColor={winner.color} /> : currentPlayer === props.player ?
+    <WinnerMessage /> : currentPlayer === props.player ?
     <UserIcon /> : null;
 
   return (
