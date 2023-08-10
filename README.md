@@ -1,9 +1,9 @@
 # Parallax Chess
 
-An implementation of a Chess game in React.
+An implementation of a 3D Chess game in React. The project was designed to easily alternate between themes and dimensions, as you can see in the GIF below.
 
 <p align="center">
-  <img alt="parallax-chess-demo" src="https://github.com/DAB0mB/parallax-chess/assets/7648874/a6cea62d-0e58-4b8a-9696-6023d12074d1">
+  <img alt="parallax-chess-demo" src="https://github.com/DAB0mB/parallax-chess/assets/7648874/f3807c8c-847a-4c58-a413-d33945ad4d69">
 </p>
 
 > https://dab0mb.github.io/parallax-chess/
