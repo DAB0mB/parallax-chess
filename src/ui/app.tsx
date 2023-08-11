@@ -22,18 +22,21 @@ export function App() {
 
   return (
     <div className={css.app} style={themeCssVars}>
-      <div className={css.appContent}>
-        <AppContext.Provider value={app}>
-          <ThemeContext.Provider value={theme}>
-            <Suspense fallback={null}>
-              <GameContext.Provider value={game}>
-                {renderMode === RenderMode['2D'] ? <Game /> : <Game3D />}
-              </GameContext.Provider>
-            </Suspense>
-            <Footer />
-          </ThemeContext.Provider>
-        </AppContext.Provider>
-      </div>
+      <AppContext.Provider value={app}>
+        <ThemeContext.Provider value={theme}>
+          <Suspense fallback={null}>
+            <GameContext.Provider value={game}>
+              <div className={css.game} style={{ display: renderMode === RenderMode['2D'] ? undefined : 'none' }}>
+                <Game />
+              </div>
+              <div className={css.game} style={{ visibility: renderMode === RenderMode['3D'] ? undefined : 'hidden' }}>
+                <Game3D />
+              </div>
+            </GameContext.Provider>
+          </Suspense>
+          <Footer />
+        </ThemeContext.Provider>
+      </AppContext.Provider>
     </div>
   )
 }
