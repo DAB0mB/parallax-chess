@@ -1,4 +1,3 @@
-import chessPiecesObj from '@/assets/chess_pieces.obj?url';
 import { noopEvent } from '@/events';
 import { useEvent, useValue } from '@/events/hooks';
 import { Pawn } from '@/game/piece/pawn';
@@ -6,9 +5,9 @@ import { Piece as PieceState } from '@/game/piece/piece';
 import { Color } from '@/game/types';
 import { useTheme } from '@/theme';
 import { withVars } from '@/utils/style';
+import ChessPiecesWorker from '@/workers/chess_pieces?worker';
 import { useMemo } from 'react';
-import { BufferGeometry, Group, Mesh, Vector3Tuple } from 'three';
-import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import { BufferGeometry, Mesh, Object3D, ObjectLoader, Vector3Tuple } from 'three';
 import css from './piece.module.css';
 
 export type PieceProps = {
@@ -58,11 +57,12 @@ function usePieceState(props: PieceProps) {
   };
 }
 
+let piecesSvgPromise: Promise<void>;
 let piecesSvgBuffer: typeof import('@/bundles/chess_pieces');
 
 function usePieceSvg(piece: PieceState) {
   if (!piecesSvgBuffer) {
-    throw import('@/bundles/chess_pieces').then((buffer) => {
+    throw piecesSvgPromise ??= import('@/bundles/chess_pieces').then((buffer) => {
       piecesSvgBuffer = buffer;
     });
   }
@@ -73,13 +73,19 @@ function usePieceSvg(piece: PieceState) {
   return svg;
 }
 
-let piecesObjBuffer: Group;
+let piecesObjPromise: Promise<void>;
+let piecesObjBuffer: Object3D;
 
 function usePieceGeometry(piece: PieceState) {
   if (!piecesObjBuffer) {
-    const loader = new OBJLoader();
-    throw loader.loadAsync(chessPiecesObj).then((buffer) => {
-      piecesObjBuffer = buffer;
+    throw piecesObjPromise ??= new Promise<void>((resolve, reject) => {
+      const worker = new ChessPiecesWorker();
+      const loader = new ObjectLoader();
+      worker.onmessage = (message) => {
+        piecesObjBuffer = loader.parse(message.data);
+        resolve();
+      };
+      worker.onerror = reject;
     });
   }
 
