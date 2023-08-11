@@ -1,4 +1,3 @@
-import { useValue } from '@/events/hooks';
 import { useTheme } from '@/theme';
 import { useCaller } from '@/utils/hooks';
 import { withVars } from '@/utils/style';
@@ -39,12 +38,11 @@ export function Checker3D(props: CheckerProps) {
 
 function useCheckerState(props: CheckerProps) {
   const game = useGame();
-  const winner = useValue(game.winner);
   const rowOdd = props.row % 2;
   const colOdd = props.col % 2;
 
   const onClick = useCaller(() => {
-    if (winner) return;
+    if (game.winner.value) return;
 
     const piece = game.board[props.row][props.col];
 
