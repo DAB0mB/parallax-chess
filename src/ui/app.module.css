@@ -7,7 +7,6 @@
   flex-direction: column;
   position: relative;
   background: var(--background);
-  overflow: hidden;
   container-type: inline-size;
 }
 
