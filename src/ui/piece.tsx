@@ -1,3 +1,4 @@
+import { ChessPiecesSvgData } from '@/bundles/chess_pieces_svg_parser';
 import { noopEvent } from '@/events';
 import { useEvent, useValue } from '@/events/hooks';
 import { Pawn } from '@/game/piece/pawn';
@@ -7,8 +8,6 @@ import { useTheme } from '@/theme';
 import { withVars } from '@/utils/style';
 import { ChessPiecesObjData } from '@/workers/chess_pieces_obj_parser';
 import ChessPiecesObjParser from '@/workers/chess_pieces_obj_parser?worker';
-import { ChessPiecesSvgData } from '@/workers/chess_pieces_svg_parser';
-import ChessPiecesSvgParser from '@/workers/chess_pieces_svg_parser?worker';
 import { useMemo } from 'react';
 import { BufferGeometry, Group, Mesh, ObjectLoader, Vector3Tuple } from 'three';
 import css from './piece.module.css';
@@ -65,13 +64,8 @@ let piecesSvgBuffer: ChessPiecesSvgData;
 
 function usePieceSvg(piece: PieceState) {
   if (!piecesSvgBuffer) {
-    throw piecesSvgPromise ??= new Promise<void>((resolve, reject) => {
-      const worker = new ChessPiecesSvgParser();
-      worker.onmessage = (message: MessageEvent<ChessPiecesSvgData>) => {
-        piecesSvgBuffer = message.data;
-        resolve();
-      };
-      worker.onerror = reject;
+    throw piecesSvgPromise ??= import('@/bundles/chess_pieces_svg_parser').then((imports) => {
+      piecesSvgBuffer = imports.data;
     });
   }
 

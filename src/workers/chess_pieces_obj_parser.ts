@@ -5,6 +5,6 @@ export type ChessPiecesObjData = {
   [key: string]: string | number | boolean | null | ChessPiecesObjData | Array<string | number | boolean | null | ChessPiecesObjData>,
 };
 
-const data = new OBJLoader().parse(chessPiecesObj).toJSON() as ChessPiecesObjData;
+export const data = new OBJLoader().parse(chessPiecesObj).toJSON() as ChessPiecesObjData;
 
 postMessage(data);

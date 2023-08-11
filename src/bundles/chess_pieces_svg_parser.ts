@@ -11,18 +11,22 @@ import WPSvg from '@/assets/white_pawn.svg';
 import WQSvg from '@/assets/white_queen.svg';
 import WRSvg from '@/assets/white_rook.svg';
 
-export const BB = createObjectURL(BBSvg);
-export const BK = createObjectURL(BKSvg);
-export const BN = createObjectURL(BNSvg);
-export const BP = createObjectURL(BPSvg);
-export const BQ = createObjectURL(BQSvg);
-export const BR = createObjectURL(BRSvg);
-export const WB = createObjectURL(WBSvg);
-export const WK = createObjectURL(WKSvg);
-export const WN = createObjectURL(WNSvg);
-export const WP = createObjectURL(WPSvg);
-export const WQ = createObjectURL(WQSvg);
-export const WR = createObjectURL(WRSvg);
+export type ChessPiecesSvgData =typeof data;
+
+export const data = {
+  BB: createObjectURL(BBSvg),
+  BK: createObjectURL(BKSvg),
+  BN: createObjectURL(BNSvg),
+  BP: createObjectURL(BPSvg),
+  BQ: createObjectURL(BQSvg),
+  BR: createObjectURL(BRSvg),
+  WB: createObjectURL(WBSvg),
+  WK: createObjectURL(WKSvg),
+  WN: createObjectURL(WNSvg),
+  WP: createObjectURL(WPSvg),
+  WQ: createObjectURL(WQSvg),
+  WR: createObjectURL(WRSvg),
+} as const;
 
 function createObjectURL(svg: string) {
   return URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
