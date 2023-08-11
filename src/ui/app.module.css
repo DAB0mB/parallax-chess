@@ -2,8 +2,12 @@
 
 .app {
   flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   position: relative;
   background: var(--background);
+  overflow: hidden;
   container-type: inline-size;
 }
 

@@ -1,9 +1,9 @@
 import { useValue } from '@/events/hooks';
 import { RenderMode, useApp } from './app_context';
-import css from './footer.module.css';
+import css from './fn_bar.module.css';
 import { useCaller } from '@/utils/hooks';
 
-export function Footer() {
+export function FnBar() {
   const app = useApp();
   const renderMode = useValue(app.renderMode);
 
@@ -12,7 +12,7 @@ export function Footer() {
   });
 
   return (
-    <div className={css.footer}>
+    <div className={css.fnBar}>
       <a href={import.meta.env.VITE_REPO_URL as string} className={css.icon}>
         <GithubIcon />
       </a>

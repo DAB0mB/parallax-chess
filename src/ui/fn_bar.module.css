@@ -1,8 +1,8 @@
-.footer {
+.fnBar {
   @value gap: .5em;
 
   position: absolute;
-  bottom: 0;
+  top: 0;
   width: calc(100% - gap * 4);
   padding: gap 0;
   margin-top: gap;

@@ -5,7 +5,7 @@ import { ThemeContext, dark, light, useThemeCssVars } from '@/theme';
 import { useState } from 'react';
 import css from './app.module.css';
 import { AppContext, App as AppState, RenderMode } from './app_context';
-import { Footer } from './footer';
+import { FnBar } from './fn_bar';
 import { Game, Game3D } from './game';
 import { GameContext } from './game_context';
 
@@ -32,7 +32,7 @@ export function App() {
               <Game3D />
             </div>
           </GameContext.Provider>
-          <Footer />
+          <FnBar />
         </ThemeContext.Provider>
       </AppContext.Provider>
     </div>
