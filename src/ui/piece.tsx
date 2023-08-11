@@ -5,9 +5,12 @@ import { Piece as PieceState } from '@/game/piece/piece';
 import { Color } from '@/game/types';
 import { useTheme } from '@/theme';
 import { withVars } from '@/utils/style';
-import ChessPiecesWorker from '@/workers/chess_pieces?worker';
+import { ChessPiecesObjData } from '@/workers/chess_pieces_obj_parser';
+import ChessPiecesObjParser from '@/workers/chess_pieces_obj_parser?worker';
+import { ChessPiecesSvgData } from '@/workers/chess_pieces_svg_parser';
+import ChessPiecesSvgParser from '@/workers/chess_pieces_svg_parser?worker';
 import { useMemo } from 'react';
-import { BufferGeometry, Mesh, Object3D, ObjectLoader, Vector3Tuple } from 'three';
+import { BufferGeometry, Group, Mesh, ObjectLoader, Vector3Tuple } from 'three';
 import css from './piece.module.css';
 
 export type PieceProps = {
@@ -58,12 +61,17 @@ function usePieceState(props: PieceProps) {
 }
 
 let piecesSvgPromise: Promise<void>;
-let piecesSvgBuffer: typeof import('@/bundles/chess_pieces');
+let piecesSvgBuffer: ChessPiecesSvgData;
 
 function usePieceSvg(piece: PieceState) {
   if (!piecesSvgBuffer) {
-    throw piecesSvgPromise ??= import('@/bundles/chess_pieces').then((buffer) => {
-      piecesSvgBuffer = buffer;
+    throw piecesSvgPromise ??= new Promise<void>((resolve, reject) => {
+      const worker = new ChessPiecesSvgParser();
+      worker.onmessage = (message: MessageEvent<ChessPiecesSvgData>) => {
+        piecesSvgBuffer = message.data;
+        resolve();
+      };
+      worker.onerror = reject;
     });
   }
 
@@ -74,14 +82,14 @@ function usePieceSvg(piece: PieceState) {
 }
 
 let piecesObjPromise: Promise<void>;
-let piecesObjBuffer: Object3D;
+let piecesObjBuffer: Group;
 
 function usePieceGeometry(piece: PieceState) {
   if (!piecesObjBuffer) {
     throw piecesObjPromise ??= new Promise<void>((resolve, reject) => {
-      const worker = new ChessPiecesWorker();
+      const worker = new ChessPiecesObjParser();
       const loader = new ObjectLoader();
-      worker.onmessage = (message) => {
+      worker.onmessage = (message: MessageEvent<ChessPiecesObjData>) => {
         piecesObjBuffer = loader.parse(message.data);
         resolve();
       };
