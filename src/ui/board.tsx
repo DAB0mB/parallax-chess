@@ -42,18 +42,10 @@ const AXIS_OFFSET = (AXIS_SURFACE + BORDER_SURFACE) / 4;
 
 export function Board3D() {
   const { board } = useGame();
-  const theme = useTheme();
 
   return useMemo(() =>
     <group>
-      <mesh position={[0, -.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[BORDER_SURFACE, BORDER_SURFACE]} />
-        <meshMatcapMaterial color={theme.lightChecker} />
-      </mesh>
-      <mesh position={[0, -.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[AXIS_SURFACE, AXIS_SURFACE]} />
-        <meshMatcapMaterial color={theme.darkChecker} />
-      </mesh>
+      <Surface />
       <group position={[0, .01, 0]}>
         <Selection3D />
       </group>
@@ -78,5 +70,22 @@ export function Board3D() {
         <VerticalAxis3D flip />
       </group>
     </group>
-  , [board, theme]);
+  , [board]);
+}
+
+function Surface() {
+  const theme = useTheme();
+
+  return (
+    <>
+      <mesh position={[0, -.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[BORDER_SURFACE, BORDER_SURFACE]} />
+        <meshMatcapMaterial color={theme?.lightChecker} />
+      </mesh>
+      <mesh position={[0, -.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[AXIS_SURFACE, AXIS_SURFACE]} />
+        <meshMatcapMaterial color={theme?.darkChecker} />
+      </mesh>
+    </>
+  );
 }
