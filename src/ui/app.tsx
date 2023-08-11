@@ -2,7 +2,7 @@ import { useListener, useValue } from '@/events/hooks';
 import { Game as GameState } from '@/game/game';
 import { Color } from '@/game/types';
 import { ThemeContext, dark, light, useThemeCssVars } from '@/theme';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import css from './app.module.css';
 import { AppContext, App as AppState, RenderMode } from './app_context';
 import { Footer } from './footer';
@@ -24,16 +24,14 @@ export function App() {
     <div className={css.app} style={themeCssVars}>
       <AppContext.Provider value={app}>
         <ThemeContext.Provider value={theme}>
-          <Suspense fallback={null}>
-            <GameContext.Provider value={game}>
-              <div className={css.game} style={{ display: renderMode === RenderMode['2D'] ? undefined : 'none' }}>
-                <Game />
-              </div>
-              <div className={css.game} style={{ visibility: renderMode === RenderMode['3D'] ? undefined : 'hidden' }}>
-                <Game3D />
-              </div>
-            </GameContext.Provider>
-          </Suspense>
+          <GameContext.Provider value={game}>
+            <div className={css.game} style={{ display: renderMode === RenderMode['2D'] ? undefined : 'none' }}>
+              <Game />
+            </div>
+            <div className={css.game} style={{ visibility: renderMode === RenderMode['3D'] ? undefined : 'hidden' }}>
+              <Game3D />
+            </div>
+          </GameContext.Provider>
           <Footer />
         </ThemeContext.Provider>
       </AppContext.Provider>
