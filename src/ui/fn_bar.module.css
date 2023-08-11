@@ -5,7 +5,6 @@
   top: 0;
   width: calc(100% - gap * 4);
   padding: gap 0;
-  margin-top: gap;
   gap: gap;
   display: flex;
   flex-direction: row;
