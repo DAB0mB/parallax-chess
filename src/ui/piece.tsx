@@ -37,7 +37,7 @@ export function Piece3D(props: PieceProps) {
     [theme.blackPiece3D, [0, Math.PI, 0]];
 
   return (
-    <mesh position={[col - 3.5, 0, row - 3.5]} rotation={rotation}>
+    <mesh key={props.piece.symbol} position={[col - 3.5, 0, row - 3.5]} rotation={rotation}>
       <primitive object={geometry} />
       <meshMatcapMaterial color={color} />
     </mesh>
@@ -89,7 +89,7 @@ function usePieceGeometry(piece: PieceState) {
     });
   }
 
-  const model = useMemo(() => piecesObjBuffer.getObjectByName(piece.symbol), [piece]);
+  const model = useMemo(() => piecesObjBuffer.getObjectByName(piece.symbol), [piece.symbol]);
   if (!(model instanceof Mesh)) throw new Error(`Piece model "${piece.symbol}" not found`);
 
   return model.geometry as BufferGeometry;
