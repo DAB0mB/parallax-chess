@@ -77,15 +77,15 @@ function Surface() {
   const theme = useTheme();
 
   return (
-    <>
+    <group>
       <mesh position={[0, -.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[BORDER_SURFACE, BORDER_SURFACE]} />
-        <meshMatcapMaterial color={theme?.lightChecker} />
+        <meshMatcapMaterial color={theme.lightChecker} />
       </mesh>
       <mesh position={[0, -.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[AXIS_SURFACE, AXIS_SURFACE]} />
-        <meshMatcapMaterial color={theme?.darkChecker} />
+        <meshMatcapMaterial color={theme.darkChecker} />
       </mesh>
-    </>
+    </group>
   );
 }
