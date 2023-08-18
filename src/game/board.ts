@@ -1,5 +1,6 @@
 import { createState } from '@/events';
 import { Unlistener } from '@/events/emitter';
+import { Value } from '@/events/value';
 import { callAll } from '@/utils/function';
 import { Piece } from './piece/piece';
 
@@ -39,7 +40,7 @@ export class Board extends Array<Array<Piece | null>> {
         this[to[0]][to[1]] = piece;
 
         this.unselect();
-        this.moved.reset(piece);
+        this.moved.value = new Value(piece);
       });
     }));
   }

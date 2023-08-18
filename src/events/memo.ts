@@ -1,9 +1,10 @@
 import { Effect } from './effect';
-import { Event } from './event';
 import { Emitter } from './emitter';
+import { Event } from './event';
+import { IValue } from './value';
 
-export class Memo<TValue> extends Effect {
-  private _value!: TValue;
+export class Memo<T> extends Effect implements IValue<T> {
+  private _value!: T;
   private invalid = true;
 
   get value() {
@@ -15,7 +16,7 @@ export class Memo<TValue> extends Effect {
     return this._value;
   }
 
-  constructor(emitter: Emitter, private readonly getter: () => TValue, events: Event[]) {
+  constructor(emitter: Emitter, private readonly getter: () => T, events: Event[]) {
     super(emitter, events);
   }
 

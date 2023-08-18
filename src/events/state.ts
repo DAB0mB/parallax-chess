@@ -1,15 +1,16 @@
-import { Event } from './event';
 import { Emitter } from './emitter';
+import { Event } from './event';
+import { IValue, Value } from './value';
 
-export class State<T> extends Event {
-  get value() {
+export class State<T> extends Event implements IValue<T> {
+  get value(): T {
     return this._value;
   }
 
-  set value(value: T) {
+  set value(value: Value<T> | T) {
     if (value === this.value) return;
 
-    this._value = value;
+    this._value = Value.get(value);
     this.emit();
   }
 
@@ -23,10 +24,5 @@ export class State<T> extends Event {
 
   toString() {
     return this.value?.toString();
-  }
-
-  reset(value: T) {
-    this._value = value;
-    this.emit();
   }
 }

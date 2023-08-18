@@ -1,7 +1,6 @@
 import { useEffect, useInsertionEffect, useRef, useState } from 'react';
 import { Event } from './event';
-import { Memo } from './memo';
-import { State } from './state';
+import { IValue } from './value';
 
 let renderCount = 0;
 
@@ -15,7 +14,7 @@ export function useEvent(event: Event) {
   }, [event]);
 }
 
-export function useValue<TValue>(event: State<TValue> | Memo<TValue>) {
+export function useValue<T>(event: Event & IValue<T>) {
   useEvent(event);
 
   return event.value;
