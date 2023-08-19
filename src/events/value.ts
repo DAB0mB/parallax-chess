@@ -1,12 +1,17 @@
+export const kValue = Symbol('value');
+
 export interface IValue<T> {
-  value: T
+  [kValue]: T
 }
 
 export class Value<T> implements IValue<T> {
-  static get<T>(value: Value<T> | T) {
-    return value instanceof Value ? value.value : value;
-  }
+  [kValue]: T;
 
-  constructor(readonly value: T) {
+  constructor(value: T) {
+    this[kValue] = value;
   }
+}
+
+export function getValue<T>(value: IValue<T> | T) {
+  return value != null && typeof value == 'object' && kValue in value ? value[kValue] : value;
 }

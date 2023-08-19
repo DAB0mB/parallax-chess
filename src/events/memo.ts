@@ -1,22 +1,22 @@
 import { Effect } from './effect';
 import { Emitter } from './emitter';
 import { Event } from './event';
-import { IValue } from './value';
+import { IValue, getValue, kValue } from './value';
 
 export class Memo<T> extends Effect implements IValue<T> {
-  private _value!: T;
+  [kValue]!: T;
   private invalid = true;
 
   get value() {
     if (this.invalid) {
       this.invalid = false;
-      this._value = this.getter();
+      this[kValue] = getValue(this.getter());
     }
 
-    return this._value;
+    return this[kValue];
   }
 
-  constructor(emitter: Emitter, private readonly getter: () => T, events: Event[]) {
+  constructor(emitter: Emitter, private readonly getter: () => IValue<T> | T, events: Event[]) {
     super(emitter, events);
   }
 

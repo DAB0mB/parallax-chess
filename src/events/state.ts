@@ -1,21 +1,25 @@
 import { Emitter } from './emitter';
 import { Event } from './event';
-import { IValue, Value } from './value';
+import { IValue, Value, getValue, kValue } from './value';
 
 export class State<T> extends Event implements IValue<T> {
+  [kValue]: T;
+
   get value(): T {
-    return this._value;
+    return this[kValue];
   }
 
   set value(value: Value<T> | T) {
     if (value === this.value) return;
 
-    this._value = Value.get(value);
+    this[kValue] = getValue(value);
     this.emit();
   }
 
-  constructor(emitter: Emitter, private _value: T) {
+  constructor(emitter: Emitter, value: T) {
     super(emitter);
+
+    this[kValue] = value;
   }
 
   valueOf() {

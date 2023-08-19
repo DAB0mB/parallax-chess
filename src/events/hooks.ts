@@ -1,6 +1,6 @@
 import { useEffect, useInsertionEffect, useRef, useState } from 'react';
 import { Event } from './event';
-import { IValue } from './value';
+import { IValue, getValue } from './value';
 
 let renderCount = 0;
 
@@ -17,7 +17,7 @@ export function useEvent(event: Event) {
 export function useValue<T>(event: Event & IValue<T>) {
   useEvent(event);
 
-  return event.value;
+  return getValue(event);
 }
 
 export function useListener(event: Event, fn: () => void) {
