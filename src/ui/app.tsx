@@ -1,7 +1,7 @@
-import { useListener, useValue } from '@/events/hooks';
 import { Game as GameState } from '@/game/game';
 import { Color } from '@/game/types';
 import { ThemeContext, dark, light, useThemeCssVars } from '@/theme';
+import { useListener, useValue } from 'event-ops/react';
 import { useState } from 'react';
 import css from './app.module.css';
 import { AppContext, App as AppState, RenderMode } from './app_context';

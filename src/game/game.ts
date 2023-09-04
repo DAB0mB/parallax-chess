@@ -1,4 +1,4 @@
-import { createState } from '@/events';
+import { State } from 'event-ops';
 import { Board } from './board';
 import { Bishop } from './piece/bishop';
 import { King } from './piece/king';
@@ -47,11 +47,11 @@ export class Game {
   readonly board = new Board(this.pieces);
   readonly whitePlayer = new Player(this.pieces.slice(16));
   readonly blackPlayer = new Player(this.pieces.slice(0, 16));
-  readonly currentPlayer = createState(this.whitePlayer);
-  readonly otherPlayer = createState(this.blackPlayer);
-  readonly winner = createState<Player | null>(null);
+  readonly currentPlayer = new State(this.whitePlayer);
+  readonly otherPlayer = new State(this.blackPlayer);
+  readonly winner = new State<Player | null>(null);
 
-  protected readonly offMoved = this.board.moved.on(() => {
+  protected readonly offMoved = this.board.moved.listen(() => {
     const winner = this.winner.value = this.calcWinner();
     if (winner) return;
 

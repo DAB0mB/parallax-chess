@@ -1,13 +1,11 @@
-import { createState } from '@/events';
-import { Unlistener } from '@/events/emitter';
-import { Value } from '@/events/value';
 import { callAll } from '@/utils/function';
+import { Dropper, State, Value } from 'event-ops';
 import { Piece } from './piece/piece';
 
 export class Board extends Array<Array<Piece | null>> {
-  readonly moved = createState<Piece | null>(null);
-  readonly selected = createState<Piece | null>(null);
-  protected readonly offPieceMoved: Unlistener;
+  readonly moved = new State<Piece | null>(null);
+  readonly selected = new State<Piece | null>(null);
+  protected readonly dropPieceMoved: Dropper;
 
   constructor(readonly pieces: Piece[]) {
     super();
@@ -25,10 +23,10 @@ export class Board extends Array<Array<Piece | null>> {
       piece.board = this;
     }
 
-    this.offPieceMoved = callAll.bind(null, pieces.map((piece) => {
+    this.dropPieceMoved = callAll.bind(null, pieces.map((piece) => {
       let lastPosition = piece.position;
 
-      return piece.moved.on(() => {
+      return piece.moved.listen(() => {
         const from = lastPosition;
         const to = piece.position;
         lastPosition = piece.position;

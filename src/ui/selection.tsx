@@ -1,4 +1,3 @@
-import { useValue } from '@/events/hooks';
 import { Position } from '@/game/types';
 import selectionFragGlsl from '@/shaders/selection.frag.glsl';
 import selectionVertGlsl from '@/shaders/selection.vert.glsl';
@@ -7,6 +6,7 @@ import { useCaller } from '@/utils/hooks';
 import { withVars } from '@/utils/style';
 import { MeshProps } from '@react-three/fiber';
 import classNames from 'classnames';
+import { useValue } from 'event-ops/react';
 import { useMemo } from 'react';
 import * as THREE from 'three';
 import { useGame } from './game_context';

@@ -1,7 +1,6 @@
-import { createState } from '@/events';
-import { State } from '@/events/state';
 import { Color, Position } from '@/game/types';
 import { cacheProperty, invalidateProperty } from '@/utils/class';
+import { State } from 'event-ops';
 import { Board } from '../board';
 
 export abstract class Piece {
@@ -18,8 +17,8 @@ export abstract class Piece {
   }
 
   get availableMoves() {
-    this.offMoved = this.board.moved.on(() => {
-      this.offMoved();
+    this.dropMoved = this.board.moved.listen(() => {
+      this.dropMoved();
       invalidateProperty(this, 'availableMoves');
     });
 
@@ -27,20 +26,20 @@ export abstract class Piece {
   }
 
   constructor(readonly color: Color, public position: Position) {
-    this.moved = createState(this.position);
-    this.deleted = createState(false);
+    this.moved = new State(this.position);
+    this.deleted = new State(false);
   }
 
   toString() {
     return `${this.color}${this.symbol}`;
   }
 
-  private offMoved() {
+  private dropMoved() {
     // override
   }
 
   delete() {
-    this.offMoved();
+    this.dropMoved();
     this.deleted.value = true;
   }
 

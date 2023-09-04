@@ -1,5 +1,5 @@
-import { createEvent } from '@/events';
 import { Color, Position } from '@/game/types';
+import { Event } from 'event-ops';
 import { Piece } from './piece';
 import { Queen } from './queen';
 
@@ -8,7 +8,7 @@ export class Pawn extends Piece {
     return 'P';
   }
 
-  readonly upgraded = createEvent();
+  readonly upgraded = new Event<void>();
 
   protected calcAvailableMoves() {
     const availableMoves: Position[] = [];

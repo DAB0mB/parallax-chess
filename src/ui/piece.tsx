@@ -1,6 +1,4 @@
 import { ChessPiecesSvgData } from '@/bundles/chess_pieces_svg_parser';
-import { noopEvent } from '@/events';
-import { useEvent, useValue } from '@/events/hooks';
 import { Pawn } from '@/game/piece/pawn';
 import { Piece as PieceState } from '@/game/piece/piece';
 import { Color } from '@/game/types';
@@ -8,6 +6,8 @@ import { useTheme } from '@/theme';
 import { withVars } from '@/utils/style';
 import { ChessPiecesObjData } from '@/workers/chess_pieces_obj_parser';
 import ChessPiecesObjParser from '@/workers/chess_pieces_obj_parser?worker';
+import { voidEvent } from 'event-ops';
+import { useListener, useUpdate, useValue } from 'event-ops/react';
 import { useMemo } from 'react';
 import { BufferGeometry, Group, Mesh, ObjectLoader, Vector3Tuple } from 'three';
 import css from './piece.module.css';
@@ -49,8 +49,9 @@ export function Piece3D(props: PieceProps) {
 function usePieceState(props: PieceProps) {
   const deleted = useValue(props.piece.deleted);
   const [row, col] = useValue(props.piece.moved);
+  const update = useUpdate();
 
-  useEvent(props.piece instanceof Pawn ? props.piece.upgraded : noopEvent)
+  useListener(props.piece instanceof Pawn ? props.piece.upgraded : voidEvent, update);
 
   return {
     deleted,

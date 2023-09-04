@@ -1,7 +1,7 @@
-import { useValue } from '@/events/hooks';
 import { Player as PlayerState } from '@/game/player';
 import { Color } from '@/game/types';
 import { withVars } from '@/utils/style';
+import { useValue } from 'event-ops/react';
 import { useGame } from './game_context';
 import css from './player.module.css';
 import { WinnerMessage } from './winner_message';

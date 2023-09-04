@@ -1,6 +1,6 @@
-import { useValue } from '@/events/hooks';
 import { Color } from '@/game/types';
 import { useLocale } from '@/locale';
+import { useValue } from 'event-ops/react';
 import { useGame } from './game_context';
 import css from './winner_message.module.css';
 

@@ -1,7 +1,7 @@
-import { useValue } from '@/events/hooks';
+import { useCaller } from '@/utils/hooks';
+import { useValue } from 'event-ops/react';
 import { RenderMode, useApp } from './app_context';
 import css from './fn_bar.module.css';
-import { useCaller } from '@/utils/hooks';
 
 export function FnBar() {
   const app = useApp();

@@ -1,4 +1,4 @@
-import { createState } from '@/events';
+import { State } from 'event-ops';
 import { createContext, useContext } from 'react';
 
 export const enum RenderMode {
@@ -7,7 +7,7 @@ export const enum RenderMode {
 }
 
 export class App {
-  readonly renderMode = createState<RenderMode>(RenderMode['3D']);
+  readonly renderMode = new State<RenderMode>(RenderMode['3D']);
 }
 
 export const AppContext = createContext<App | null>(null);
