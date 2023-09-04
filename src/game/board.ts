@@ -1,11 +1,11 @@
 import { callAll } from '@/utils/function';
-import { Dropper, State, Value } from 'event-ops';
+import { State, Value } from 'event-ops';
 import { Piece } from './piece/piece';
 
 export class Board extends Array<Array<Piece | null>> {
   readonly moved = new State<Piece | null>(null);
   readonly selected = new State<Piece | null>(null);
-  protected readonly dropPieceMoved: Dropper;
+  protected readonly dropPieceMoved: () => void;
 
   constructor(readonly pieces: Piece[]) {
     super();
