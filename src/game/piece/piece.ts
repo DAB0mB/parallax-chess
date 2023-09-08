@@ -17,8 +17,8 @@ export abstract class Piece {
   }
 
   get availableMoves() {
-    this.dropMoved = this.board.moved.listen(() => {
-      this.dropMoved();
+    this.clearMoved = this.board.moved.listen(() => {
+      this.clearMoved();
       invalidateProperty(this, 'availableMoves');
     });
 
@@ -34,12 +34,12 @@ export abstract class Piece {
     return `${this.color}${this.symbol}`;
   }
 
-  private dropMoved() {
+  private clearMoved() {
     // override
   }
 
   delete() {
-    this.dropMoved();
+    this.clearMoved();
     this.deleted.value = true;
   }
 

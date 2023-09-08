@@ -1,11 +1,11 @@
 import { callAll } from '@/utils/function';
-import { ListenerDropFn, State, Value } from 'event-ops';
+import { ClearFn, State, Value } from 'event-ops';
 import { Piece } from './piece/piece';
 
 export class Board extends Array<Array<Piece | null>> {
   readonly moved = new State<Piece | null>(null);
   readonly selected = new State<Piece | null>(null);
-  protected readonly dropPieceMoved: ListenerDropFn;
+  protected readonly clearPieceMoved: ClearFn;
 
   constructor(readonly pieces: Piece[]) {
     super();
@@ -23,7 +23,7 @@ export class Board extends Array<Array<Piece | null>> {
       piece.board = this;
     }
 
-    this.dropPieceMoved = callAll.bind(null, pieces.map((piece) => {
+    this.clearPieceMoved = callAll.bind(null, pieces.map((piece) => {
       let lastPosition = piece.position;
 
       return piece.moved.listen(() => {
